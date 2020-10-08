@@ -1,0 +1,10 @@
+<div class='container'>
+  <div *ngIf="products && products.length > 0; else elseBlock">
+    <ul><h2>You Have In Your Cart:</h2>
+      <li *ngFor='let product of products'>{{product.name}}</li>
+    </ul>
+  </div>
+  <ng-template #elseBlock>
+    <h2>Your Cart is empty</h2>
+  </ng-template>
+</div>
