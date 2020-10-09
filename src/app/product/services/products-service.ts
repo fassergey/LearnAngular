@@ -1,6 +1,9 @@
+import { Injectable } from '@angular/core';
 import { Category } from '../../shared/models/category.enum';
 import { Product } from '../models/product';
 
+// Класс сервиса должен быть с декоратором
+@Injectable()
 export class ProductsService {
   getProducts(): Product[] {
     return [

@@ -6,7 +6,7 @@ import { Product } from './../../product/models/product';
   providedIn: 'root'
 })
 export class CartService {
-  products: Product[] = [];
+  products: Product[] = []; // думаю, модель должна содержать еще и количество товара
 
   constructor() { }
 
@@ -14,3 +14,4 @@ export class CartService {
     this.products.push(product);
   }
 }
+// создайте папку app/cart/services и туда перенесите этот сервис
