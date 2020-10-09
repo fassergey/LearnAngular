@@ -5,11 +5,10 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 import { AppComponent } from './app.component';
 import { FirstComponent } from './first/first.component';
-import { ProductComponent } from './product/product.component';
+import { ProductComponent } from './product/components/product/product.component';
 import { ProductListComponent } from './product/components/product-list/product-list.component';
 import { ProductsService } from './product/services/products-service';
-import { CartListComponent } from './cart-list/cart-list.component';
-import { CartService } from './shared/services/cart.service';
+import { CartListComponent } from './cart-list/components/cart-list.component';
 
 @NgModule({
   declarations: [
@@ -24,8 +23,7 @@ import { CartService } from './shared/services/cart.service';
     ButtonsModule.forRoot()
   ],
   providers: [
-    ProductsService,
-    CartService
+    ProductsService
   ],
   bootstrap: [AppComponent]
 })
