@@ -11,6 +11,7 @@ import { CartService } from './../shared/services/cart.service';
 export class ProductComponent {
   @Input() product: Product;
 
+  // не нужно тут внедрять зависимость, лучше использовать @Output
   constructor(private cartService: CartService) { }
 
   onBuy(): void {
@@ -18,3 +19,4 @@ export class ProductComponent {
     this.cartService.addToCart(this.product);
   }
 }
+// переместите этот компонент в папку app/product/components

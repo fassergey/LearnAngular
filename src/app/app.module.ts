@@ -9,7 +9,7 @@ import { ProductComponent } from './product/product.component';
 import { ProductListComponent } from './product/components/product-list/product-list.component';
 import { ProductsService } from './product/services/products-service';
 import { CartListComponent } from './cart-list/cart-list.component';
-import { CartService } from './shared/services/cart.service';
+// import { CartService } from './shared/services/cart.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { CartService } from './shared/services/cart.service';
   ],
   providers: [
     ProductsService,
-    CartService
+    // CartService
   ],
   bootstrap: [AppComponent]
 })
