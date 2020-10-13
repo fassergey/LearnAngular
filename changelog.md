@@ -9,3 +9,7 @@
     7. created ProductListComponent
     8. created CartListComponent
     9. created CartService
+
+## Components
+
+    1. Divided application onto modules
