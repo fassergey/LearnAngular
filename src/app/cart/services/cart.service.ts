@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Product } from '../../product/models/product';
+import { Product } from '../../shared/models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,20 @@ export class CartService {
     } else {
       this.products.set(product, 1);
     }
+  }
+
+  changeItemNumber(product: Product, difference: number): void {
+    let value = this.products.get(product);
+    value += difference;
+    if (value === 0) {
+      this.removeItem(product);
+    } else {
+      this.products.set(product, value);
+    }
+  }
+
+  removeItem(product: Product): void {
+    this.products.delete(product);
   }
 
   private calculateSum(): number {

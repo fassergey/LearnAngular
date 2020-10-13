@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { CartListComponent } from './cart/components/cart-list.component';
-import { ProductListComponent } from './product/components/product-list/product-list.component';
+import { CartListComponent } from './cart/components/cart-list/cart-list.component';
 
 @Component({
   selector: 'app-root',

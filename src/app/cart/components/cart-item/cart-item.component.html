@@ -1,0 +1,12 @@
+<div class="container">
+  <div>{{product.name}}</div>
+  <div>${{product.price}}</div>
+  <div>
+    <button type="button" class="btn btn-warning" (click)="onChangeNumber(-1)">-</button>
+    {{count}}
+    <button type="button" class="btn btn-success" (click)="onChangeNumber(1)">+</button>
+  </div>
+  <div>
+    <button type="button" class="btn btn-danger" (click)="onRemove()">x</button>
+  </div>
+</div>

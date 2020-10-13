@@ -1,7 +1,8 @@
+import { CartItem } from './../../models/cart-item';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
-import { Product } from './../../product/models/product';
-import { CartService } from '../services/cart.service';
+import { Product } from '../../../shared/models/product';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-cart-list',
@@ -19,6 +20,14 @@ export class CartListComponent implements OnInit {
 
   ngOnInit(): void {
     this.products = this.cartService.products;
+  }
+
+  onChangeItemNumber(item: CartItem): void {
+    this.cartService.changeItemNumber(item.product, item.count);
+  }
+
+  onRemoveItem(product: Product): void {
+    this.cartService.removeItem(product);
   }
 
   get numberOfGoods(): number {
