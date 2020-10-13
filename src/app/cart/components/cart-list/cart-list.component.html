@@ -1,7 +1,6 @@
 <div class='container'>
   <div *ngIf="products && products.size > 0; else elseBlock">
-    <ul><h2>You Have In Your Cart {{numberOfGoods}} position(s) on ${{sumOfGoods}}:</h2>
-      <!-- <li *ngFor='let entry of products.entries()'>{{entry[0].name}}: {{entry[1]}}</li> -->
+    <ul><h2>You Have In Your Cart {{numberOfGoods}} position(s):</h2>
       <li *ngFor='let entry of products.entries()'>
         <app-cart-item
           [product]="entry[0]"
@@ -11,6 +10,9 @@
         </app-cart-item>
       </li>
     </ul>
+    <div class="summa">
+      <h4>Sum: ${{sumOfGoods}}</h4>
+    </div>
   </div>
   <ng-template #elseBlock>
     <h2>Your Cart is empty</h2>

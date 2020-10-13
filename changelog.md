@@ -17,3 +17,4 @@
     3. disable button 'Buy' when product is unavailable. Made ProductComponent presenting component
     4. modified CartService. Added number and sum of goods as get-properties
     5. modified CartListComponent in order to display number and sum of goods in the cart
+    6. created CartItemComponent
