@@ -12,4 +12,7 @@
 
 ## Components
 
-    1. Divided application onto modules
+    1. divided application onto modules
+    2. delegated displaying goods responsibility to ProductComponent from ProductListComponent
+    3. disable button 'Buy' when product is unavailable. Made ProductComponent presenting component
+    4. modified CartService. Added number and sum of goods

@@ -1,3 +1,3 @@
 <!-- <app-first></app-first> -->
-<app-product-list></app-product-list>
-<app-cart-list></app-cart-list>
+<app-product-list (cartUpdated)="onCartUpdated()"></app-product-list>
+<app-cart-list #cartList></app-cart-list>
