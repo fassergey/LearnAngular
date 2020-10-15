@@ -1,8 +1,8 @@
-import { CartItem } from './../../models/cart-item';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { Product } from '../../../shared/models/product';
 import { CartService } from '../../services/cart.service';
+import { CartItem } from '../../models/cart-item';
 
 @Component({
   selector: 'app-cart-list',

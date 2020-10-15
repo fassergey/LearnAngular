@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 
 import { CartListComponent } from './cart/components/cart-list/cart-list.component';
 
@@ -7,10 +7,13 @@ import { CartListComponent } from './cart/components/cart-list/cart-list.compone
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
+  @ViewChild('appTitle') appTitle: ElementRef;
   @ViewChild('cartList') cartList: CartListComponent;
 
-  title = 'shop';
+  ngAfterViewInit(): void {
+    this.appTitle.nativeElement.innerText = 'Fasolko\'s Stall';
+  }
 
   onCartUpdated(): void {
     this.cartList.refresh();
