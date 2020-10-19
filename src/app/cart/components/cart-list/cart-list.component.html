@@ -1,0 +1,20 @@
+<div class='container'>
+  <div *ngIf="products && products.size > 0; else elseBlock">
+    <ul><h2>You Have In Your Cart {{numberOfGoods}} position(s):</h2>
+      <li *ngFor='let entry of products.entries()'>
+        <app-cart-item appHighlight
+          [product]="entry[0]"
+          [count]="entry[1]"
+          (changeItemNumber)="onChangeItemNumber($event)"
+          (removeItem)="onRemoveItem($event)">
+        </app-cart-item>
+      </li>
+    </ul>
+    <div class="summa">
+      <h4>Sum: ${{sumOfGoods}}</h4>
+    </div>
+  </div>
+  <ng-template #elseBlock>
+    <h2>Your Cart is empty</h2>
+  </ng-template>
+</div>

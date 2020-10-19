@@ -4,6 +4,6 @@
   <div>{{product.description}}</div>
   <div>${{product.price}}</div>
   <div>{{product.category}}</div>
-  <div>isAvailable <input type="checkbox" disabled [checked]='product.isAvailable' /></div>
-  <div><button type="button" class="btn btn-primary" (click)="onBuy()">Buy</button></div>
+  <div>isAvailable <input type="checkbox" disabled [checked]="product.isAvailable" /></div>
+  <div><button type="button" class="btn btn-primary" (click)="onBuy()" [disabled]="!product.isAvailable">Buy</button></div>
 </div>

@@ -5,25 +5,21 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 import { AppComponent } from './app.component';
 import { FirstComponent } from './first/first.component';
-import { ProductComponent } from './product/components/product/product.component';
-import { ProductListComponent } from './product/components/product-list/product-list.component';
-import { ProductsService } from './product/services/products-service';
-import { CartListComponent } from './cart-list/components/cart-list.component';
+import { CartModule } from './cart/cart.module';
+import { ProductModule } from './product/product.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     FirstComponent,
-    ProductComponent,
-    ProductListComponent,
-    CartListComponent
   ],
   imports: [
     BrowserModule,
-    ButtonsModule.forRoot()
-  ],
-  providers: [
-    ProductsService
+    ButtonsModule.forRoot(),
+    CartModule,
+    ProductModule,
+    SharedModule
   ],
   bootstrap: [AppComponent]
 })

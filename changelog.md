@@ -9,3 +9,14 @@
     7. created ProductListComponent
     8. created CartListComponent
     9. created CartService
+
+## Components
+
+    1. divided application onto modules
+    2. delegated displaying goods responsibility to ProductComponent from ProductListComponent
+    3. disable button 'Buy' when product is unavailable. Made ProductComponent presenting component
+    4. modified CartService. Added number and sum of goods as get-properties
+    5. modified CartListComponent in order to display number and sum of goods in the cart
+    6. created CartItemComponent
+    7. added template variable appTitle
+    8. created HighlightDirective

@@ -1,4 +1,4 @@
-import { Category } from '../../shared/models/category.enum';
+import { Category } from './category.enum';
 
 export class Product {
   name: string;
