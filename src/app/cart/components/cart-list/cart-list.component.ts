@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+
+import { Subscription } from 'rxjs';
 
 import { Product } from '../../../shared/models/product';
 import { CartService } from '../../services/cart.service';
@@ -10,8 +12,10 @@ import { CartItem } from '../../models/cart-item';
   styleUrls: ['./cart-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CartListComponent implements OnInit {
+export class CartListComponent implements OnInit, OnDestroy {
   products: Map<Product, number>;
+
+  private sub: Subscription;
 
   constructor(
     private cartService: CartService,
@@ -19,7 +23,11 @@ export class CartListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.products = this.cartService.products;
+    this.sub = this.cartService.products$.subscribe(data => this.products = data);
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   onChangeItemNumber(item: CartItem): void {
@@ -31,14 +39,27 @@ export class CartListComponent implements OnInit {
   }
 
   get numberOfGoods(): number {
-    return this.cartService.itemsNumber;
+    return this.products && this.products.size > 0 ?
+      this.products.size :
+      0;
   }
 
   get sumOfGoods(): number {
-    return this.cartService.sum;
+    return this.products && this.products.size > 0 ?
+      this.calculateSum() :
+      0;
   }
 
   refresh(): void {
     this.cdr.markForCheck();
+  }
+
+  private calculateSum(): number {
+    let sum = 0;
+    for (const entry of this.products) {
+      sum += entry[0].price * entry[1];
+    }
+
+    return sum;
   }
 }
