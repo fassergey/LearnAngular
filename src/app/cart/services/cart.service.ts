@@ -1,12 +1,24 @@
 import { Injectable } from '@angular/core';
 
+import { BehaviorSubject, Observable } from 'rxjs';
+
 import { Product } from '../../shared/models/product';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  products: Map<Product, number> = new Map<Product, number>();
+  private products: Map<Product, number>;
+  private subject: BehaviorSubject<Map<Product, number>>;
+
+  constructor() {
+      this.products = new Map<Product, number>();
+      this.subject = new BehaviorSubject<Map<Product, number>>(this.products);
+  }
+
+  get products$(): Observable<Map<Product, number>> {
+    return this.subject.asObservable();
+  }
 
   get itemsNumber(): number {
     return this.products && this.products.size > 0 ?
@@ -27,6 +39,8 @@ export class CartService {
     } else {
       this.products.set(product, 1);
     }
+
+    this.subject.next(this.products);
   }
 
   changeItemNumber(product: Product, difference: number): void {
@@ -37,10 +51,13 @@ export class CartService {
     } else {
       this.products.set(product, value);
     }
+
+    this.subject.next(this.products);
   }
 
   removeItem(product: Product): void {
     this.products.delete(product);
+    this.subject.next(this.products);
   }
 
   private calculateSum(): number {
