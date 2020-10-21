@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { Category } from '../../shared/models/category.enum';
 import { Product } from '../../shared/models/product';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ProductsService {
   getProducts(): Product[] {
     return [
