@@ -15,7 +15,7 @@ export class CartItemComponent {
   @Output() changeItemNumber: EventEmitter<CartItem> = new EventEmitter<CartItem>();
   @Output() removeItem: EventEmitter<Product> = new EventEmitter<Product>();
 
-  constructor() { }
+  constructor() { console.log('CartItemComponent'); }
 
   onChangeNumber(difference: number): void {
     const model: CartItem = {

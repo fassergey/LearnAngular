@@ -16,7 +16,7 @@ export class CartListComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) { console.log('CartListComponent'); }
 
   ngOnInit(): void {
     this.products = this.cartService.products;
