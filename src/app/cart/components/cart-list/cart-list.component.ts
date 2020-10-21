@@ -20,7 +20,7 @@ export class CartListComponent implements OnInit, OnDestroy {
   constructor(
     private cartService: CartService,
     private cdr: ChangeDetectorRef
-  ) { console.log('CartListComponent'); }
+  ) { }
 
   ngOnInit(): void {
     this.sub = this.cartService.products$.subscribe(data => this.products = data);
