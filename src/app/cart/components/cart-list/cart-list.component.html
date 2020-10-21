@@ -2,6 +2,9 @@
   <div *ngIf="products && products.size > 0; else elseBlock">
     <ul><h2>You Have In Your Cart {{numberOfGoods}} position(s):</h2>
       <li *ngFor='let entry of products.entries()'>
+        <!-- этот компонент постоянно пересоздается на каждый ивент, а заодно и директива
+        возможно, надо изменить стратегию обновления компонента и использвоать коммуникацию на базе сервиса с push подходом
+      добавьте вывод в консоль чего-то в конструкторе директивы и компонента и увидите -->
         <app-cart-item appHighlight
           [product]="entry[0]"
           [count]="entry[1]"
