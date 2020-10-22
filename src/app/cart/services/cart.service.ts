@@ -9,6 +9,10 @@ import { CartItem } from '../models/cart-item';
   providedIn: 'root'
 })
 export class CartService {
+  totalQuantity: number;
+  totalSum: number;
+  isEmpty: boolean;
+
   private products: CartItem[];
   private subject: BehaviorSubject<CartItem[]>;
 
@@ -21,19 +25,7 @@ export class CartService {
     return this.subject.asObservable();
   }
 
-  get itemsNumber(): number {
-    return this.products && this.products.length > 0 ?
-      this.products.length :
-      0;
-  }
-
-  get sum(): number {
-    return this.products && this.products.length > 0 ?
-      this.calculateSum() :
-      0;
-  }
-
-  addToCart(product: Product): void {
+  addProduct(product: Product): void {
     const idx = this.getItemIndex(product);
     if (idx > -1) {
       this.products[idx].count++;
@@ -41,23 +33,54 @@ export class CartService {
       this.products.push({ product, count: 1 });
     }
 
+    this.updateCartData();
+
     this.subject.next(this.products);
   }
 
-  changeItemNumber(product: Product, difference: number): void {
+  increaseQuantity(product: Product): void {
+    this.changeQuantity(product, 1);
+  }
+
+  decreaseQuantity(product: Product): void {
+    this.changeQuantity(product, -1);
+  }
+
+  removeProduct(product: Product): void {
+    const idx = this.getItemIndex(product);
+    this.products.splice(idx, 1);
+    this.updateCartData();
+    this.subject.next(this.products);
+  }
+
+  removeAllProducts(): void {
+    this.products = [];
+    this.updateCartData();
+    this.subject.next(this.products);
+  }
+
+  updateCartData(): void {
+    this.totalQuantity = this.products && this.products.length > 0 ?
+      this.products.length :
+      0;
+
+    this.totalSum = this.products && this.products.length > 0 ?
+      this.calculateSum() :
+      0;
+
+    this.isEmpty = !(this.products && this.products.length > 0);
+  }
+
+  private changeQuantity(product: Product, difference: number): void {
     const idx = this.getItemIndex(product);
     this.products[idx].count += difference;
 
     if (this.products[idx].count === 0) {
-      this.removeItem(product);
+      this.removeProduct(product);
     }
 
-    this.subject.next(this.products);
-  }
+    this.updateCartData();
 
-  removeItem(product: Product): void {
-    const idx = this.getItemIndex(product);
-    this.products.splice(idx, 1);
     this.subject.next(this.products);
   }
 
@@ -66,12 +89,6 @@ export class CartService {
   }
 
   private calculateSum(): number {
-    // let sum = 0;
-    // for (const item of this.products) {
-    //   sum += item.product.price * item.count;
-    // }
-
-    // return sum;
     let sum = 0;
     this.products.forEach(ci => sum += ci.product.price * ci.count);
     return sum;

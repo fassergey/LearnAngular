@@ -5,7 +5,8 @@
         <app-cart-item
           [product]="item.product"
           [count]="item.count"
-          (changeItemNumber)="onChangeItemNumber($event)"
+          (increaseQuantity)="onIncreaseQuantity($event)"
+          (decreaseQuantity)="onDecreaseQuantity($event)"
           (removeItem)="onRemoveItem($event)">
         </app-cart-item>
       </li>

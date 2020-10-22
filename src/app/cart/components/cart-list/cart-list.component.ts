@@ -30,20 +30,24 @@ export class CartListComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  onChangeItemNumber(item: CartItem): void {
-    this.cartService.changeItemNumber(item.product, item.count);
+  onIncreaseQuantity(product: Product): void {
+    this.cartService.increaseQuantity(product);
+  }
+
+  onDecreaseQuantity(product: Product): void {
+    this.cartService.decreaseQuantity(product);
   }
 
   onRemoveItem(product: Product): void {
-    this.cartService.removeItem(product);
+    this.cartService.removeProduct(product);
   }
 
   get numberOfGoods(): number {
-    return this.cartService.itemsNumber;
+    return this.cartService.totalQuantity;
   }
 
   get sumOfGoods(): number {
-    return this.cartService.sum;
+    return this.cartService.totalSum;
   }
 
   refresh(): void {
