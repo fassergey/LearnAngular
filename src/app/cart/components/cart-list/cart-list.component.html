@@ -1,10 +1,10 @@
 <div class='container'>
-  <div *ngIf="products && products.size > 0; else elseBlock">
+  <div *ngIf="products && products.length > 0; else elseBlock">
     <ul><h2>You Have In Your Cart {{numberOfGoods}} position(s):</h2>
-      <li appHighlight *ngFor='let entry of products.entries(); trackBy:trackByFn'>
+      <li appHighlight *ngFor='let item of products; trackBy:trackByFn'>
         <app-cart-item
-          [product]="entry[0]"
-          [count]="entry[1]"
+          [product]="item.product"
+          [count]="item.count"
           (changeItemNumber)="onChangeItemNumber($event)"
           (removeItem)="onRemoveItem($event)">
         </app-cart-item>

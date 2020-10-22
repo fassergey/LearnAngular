@@ -13,7 +13,7 @@ import { CartItem } from '../../models/cart-item';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartListComponent implements OnInit, OnDestroy {
-  products: Map<Product, number>;
+  products: CartItem[];
 
   private sub: Subscription;
 
