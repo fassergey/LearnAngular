@@ -20,3 +20,8 @@
     6. created CartItemComponent
     7. added template variable appTitle
     8. created HighlightDirective
+
+### Services
+
+    1. implemented interface of CartService
+    2. 
