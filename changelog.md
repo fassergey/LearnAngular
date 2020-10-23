@@ -24,4 +24,9 @@
 ### Services
 
     1. implemented interface of CartService
-    2. 
+    2. created LocalStorageService
+    3. created ConfigOptionsService
+    4. created ConstantsService
+    5. created GeneratorService
+    6. inject services into FirstComponent
+    7. 
