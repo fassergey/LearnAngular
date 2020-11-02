@@ -27,6 +27,8 @@
     2. created LocalStorageService
     3. created ConfigOptionsService
     4. created ConstantsService
-    5. created GeneratorService
+    5. created GeneratorService, ConsolePrintService
     6. inject services into FirstComponent
-    7. 
+    7. created ClickHandlerDirective
+    8. implemented tests for created services in FirstComponent
+    9. applied ClickHandlerDirective to FirstComponent's elements

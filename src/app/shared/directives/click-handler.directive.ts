@@ -1,15 +1,15 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[appClickHandler]'
 })
 export class ClickHandlerDirective {
-  private color = 'yellow';
+  @Input('appClickHandler') color: string;
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, private renderer: Renderer2) { }
 
   @HostListener('click')
   onMouseClick(): void {
-    this.el.nativeElement.style.backgroundColor = this.color;
+    this.renderer.setStyle(this.el.nativeElement, 'backgroundColor', this.color || 'yellow');
   }
 }
