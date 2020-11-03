@@ -2,8 +2,8 @@
   <div><img src='../../assets/no_photo.png' width="150px" height="100px" /></div>
   <div>{{product.name}}</div>
   <div>{{product.description}}</div>
-  <div>${{product.price}}</div>
-  <div>{{product.category}}</div>
+  <div>{{product.price | currency : "GBP" : true}}</div>
+  <div>{{product.category | uppercase}}</div>
   <div>isAvailable <input type="checkbox" disabled [checked]="product.isAvailable" /></div>
   <div><button type="button" class="btn btn-primary" (click)="onBuy()" [disabled]="!product.isAvailable">Buy</button></div>
 </div>

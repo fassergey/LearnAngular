@@ -32,3 +32,10 @@
     7. created ClickHandlerDirective
     8. implemented tests for created services in FirstComponent
     9. applied ClickHandlerDirective to FirstComponent's elements
+
+#### Pipes
+
+    1. applied currency pipe to ProductComponent and CartItemComponent. Applied uppercase pipe to ProductComponent
+    2. made getProducts return type observable
+    3. created OrderByPipe
+    4. registered OrderByPipe in Shared module

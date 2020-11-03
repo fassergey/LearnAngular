@@ -14,6 +14,8 @@ import { CartItem } from '../../models/cart-item';
 })
 export class CartListComponent implements OnInit, OnDestroy {
   products: CartItem[];
+  field: string;
+  ascOrder: boolean;
 
   private sub: Subscription;
 
@@ -48,6 +50,10 @@ export class CartListComponent implements OnInit, OnDestroy {
 
   get sumOfGoods(): number {
     return this.cartService.totalSum;
+  }
+
+  asCartItem(o: object): CartItem {
+    return o as CartItem;
   }
 
   refresh(): void {

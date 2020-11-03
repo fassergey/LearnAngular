@@ -30,7 +30,15 @@ export class CartService {
     if (idx > -1) {
       this.products[idx].count++;
     } else {
-      this.products.push({ product, count: 1 });
+      const newItem: CartItem = {
+        name: product.name,
+        category: product.category,
+        description: product.description,
+        isAvailable: product.isAvailable,
+        price: product.price,
+        count: 1
+      };
+      this.products.push(newItem);
     }
 
     this.updateCartData();
@@ -85,12 +93,12 @@ export class CartService {
   }
 
   private getItemIndex(product: Product): number {
-    return this.products.findIndex(ci => ci.product === product);
+    return this.products.findIndex(ci => ci.name === product.name);
   }
 
   private calculateSum(): number {
     let sum = 0;
-    this.products.forEach(ci => sum += ci.product.price * ci.count);
+    this.products.forEach(ci => sum += ci.price * ci.count);
     return sum;
   }
 }
