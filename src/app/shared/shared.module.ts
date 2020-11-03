@@ -7,7 +7,7 @@ import { OrderByPipe } from './pipes/order-by.pipe';
 
 @NgModule({
   declarations: [HighlightDirective, ClickHandlerDirective, OrderByPipe],
-  exports: [HighlightDirective, ClickHandlerDirective, OrderByPipe],
+  exports: [HighlightDirective, ClickHandlerDirective, OrderByPipe, CommonModule],
   imports: [
     CommonModule
   ]

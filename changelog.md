@@ -39,3 +39,5 @@
     2. made getProducts return type observable
     3. created OrderByPipe
     4. registered OrderByPipe in Shared module
+    5. added radio buttons to CartListComponent to change sorting order
+    6. declare and export CommonModule from SharedModule

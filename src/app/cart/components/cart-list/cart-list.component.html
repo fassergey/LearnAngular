@@ -10,7 +10,11 @@
       </li>
     </ul>
 
-    <div>
+    <div class="summa">
+      <h4>Sum: ${{sumOfGoods}}</h4>
+    </div>
+
+    <div class="sorting">
       <pre class="card card-block card-header">Select field to order cart items:</pre>
       <div class="form-inline">
         <div class="btn-group" btnRadioGroup>
@@ -27,10 +31,6 @@
           <label class="btn btn-success" btnRadio="desc" [class.selected]="!ascOrder" (click)="ascOrder=false">Desc</label>
         </div>
       </div>
-    </div>
-
-    <div class="summa">
-      <h4>Sum: ${{sumOfGoods}}</h4>
     </div>
   </div>
   <ng-template #elseBlock>
