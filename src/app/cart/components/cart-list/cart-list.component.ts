@@ -26,6 +26,8 @@ export class CartListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub = this.cartService.products$.subscribe(data => this.products = data);
+    this.field = 'price';
+    this.ascOrder = true;
   }
 
   ngOnDestroy(): void {
