@@ -1,54 +1,104 @@
 import { Injectable } from '@angular/core';
 
+import { BehaviorSubject, Observable } from 'rxjs';
+
 import { Product } from '../../shared/models/product';
+import { CartItem } from '../models/cart-item';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  products: Map<Product, number> = new Map<Product, number>();
+  totalQuantity: number;
+  totalSum: number;
+  isEmpty: boolean;
 
-  get itemsNumber(): number {
-    return this.products && this.products.size > 0 ?
-      this.products.size :
-      0;
+  private products: CartItem[];
+  private subject: BehaviorSubject<CartItem[]>;
+
+  constructor() {
+    this.products = new Array<CartItem>();
+    this.subject = new BehaviorSubject<CartItem[]>(this.products);
   }
 
-  get sum(): number {
-    return this.products && this.products.size > 0 ?
+  get products$(): Observable<CartItem[]> {
+    return this.subject.asObservable();
+  }
+
+  addProduct(product: Product): void {
+    const idx = this.getItemIndex(product);
+    if (idx > -1) {
+      this.products[idx].count++;
+    } else {
+      const newItem: CartItem = {
+        name: product.name,
+        category: product.category,
+        description: product.description,
+        isAvailable: product.isAvailable,
+        price: product.price,
+        count: 1
+      };
+      this.products.push(newItem);
+    }
+
+    this.updateCartData();
+
+    this.subject.next(this.products);
+  }
+
+  increaseQuantity(product: Product): void {
+    this.changeQuantity(product, 1);
+  }
+
+  decreaseQuantity(product: Product): void {
+    this.changeQuantity(product, -1);
+  }
+
+  removeProduct(product: Product): void {
+    const idx = this.getItemIndex(product);
+    this.products.splice(idx, 1);
+    this.updateCartData();
+    this.subject.next(this.products);
+  }
+
+  removeAllProducts(): void {
+    this.products = [];
+    this.updateCartData();
+    this.subject.next(this.products);
+  }
+
+  updateCartData(): void {
+    this.totalQuantity = this.products && this.products.length > 0 ?
+      this.products.length :
+      0;
+
+    this.totalSum = this.products && this.products.length > 0 ?
       this.calculateSum() :
       0;
+
+    this.isEmpty = !(this.products && this.products.length > 0);
   }
 
-  addToCart(product: Product): void {
-    if (this.products.has(product)) {
-      const previousValue = this.products.get(product);
-      this.products.set(product, previousValue + 1);
-    } else {
-      this.products.set(product, 1);
+  private changeQuantity(product: Product, difference: number): void {
+    const idx = this.getItemIndex(product);
+    this.products[idx].count += difference;
+
+    if (this.products[idx].count === 0) {
+      this.removeProduct(product);
     }
+
+    this.updateCartData();
+
+    this.subject.next(this.products);
   }
 
-  changeItemNumber(product: Product, difference: number): void {
-    let value = this.products.get(product);
-    value += difference;
-    if (value === 0) {
-      this.removeItem(product);
-    } else {
-      this.products.set(product, value);
-    }
-  }
-
-  removeItem(product: Product): void {
-    this.products.delete(product);
+  private getItemIndex(product: Product): number {
+    return this.products.findIndex(ci => ci.name === product.name);
   }
 
   private calculateSum(): number {
     let sum = 0;
-    for (const entry of this.products) {
-      sum += entry[0].price * entry[1];
-    }
-
+    this.products.forEach(ci => sum += ci.price * ci.count);
     return sum;
   }
 }

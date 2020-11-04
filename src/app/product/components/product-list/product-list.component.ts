@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
+import { Observable } from 'rxjs';
+
 import { Product } from '../../../shared/models/product';
 import { CartService } from '../../../cart/services/cart.service';
 import { ProductsService } from '../../services/products-service';
@@ -12,7 +14,7 @@ import { ProductsService } from '../../services/products-service';
 export class ProductListComponent implements OnInit {
   @Output() cartUpdated: EventEmitter<void> = new EventEmitter<void>();
 
-  products: Product[];
+  products$: Observable<Product[]>;
 
   constructor(
     private productsService: ProductsService,
@@ -20,11 +22,11 @@ export class ProductListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.products = this.productsService.getProducts();
+    this.products$ = this.productsService.getProducts();
   }
 
   onProductBought(product: Product): void {
-    this.cartService.addToCart(product);
+    this.cartService.addProduct(product);
     this.cartUpdated.emit();
   }
 }

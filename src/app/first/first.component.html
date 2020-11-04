@@ -1,8 +1,8 @@
 <p>This is my first component!</p>
 <ul>It contains properties:
-  <li>Name with value: {{name}}</li>
-  <li>Description with value: {{description}}</li>
-  <li>Price with value: {{price}}</li>
+  <li appClickHandler="lightgreen">Name with value: {{name}}</li>
+  <li appClickHandler="red">Description with value: {{description}}</li>
+  <li appClickHandler>Price with value: {{price}}</li>
   <li>Categories with values: {{categories.join(', ')}}</li>
   <li>isAvailable with value: {{isAvailable}}</li>
 </ul>

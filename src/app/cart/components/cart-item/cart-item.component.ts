@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { CartItem } from '../../models/cart-item';
 import { Product } from '../../../shared/models/product';
 
 @Component({
@@ -12,20 +11,17 @@ import { Product } from '../../../shared/models/product';
 export class CartItemComponent {
   @Input() product: Product;
   @Input() count: number;
-  @Output() changeItemNumber: EventEmitter<CartItem> = new EventEmitter<CartItem>();
+  @Output() increaseQuantity: EventEmitter<Product> = new EventEmitter<Product>();
+  @Output() decreaseQuantity: EventEmitter<Product> = new EventEmitter<Product>();
   @Output() removeItem: EventEmitter<Product> = new EventEmitter<Product>();
 
-  constructor() { }
+  constructor() { console.log('CartItemComponent'); }
 
-  onChangeNumber(difference: number): void {
-    const model: CartItem = {
-      product: this.product,
-      count: difference
-    };
-    this.changeItemNumber.emit(model);
+  onChangeQuantity(difference: number): void {
+    difference === 1 ? this.increaseQuantity.emit(this.product) : this.decreaseQuantity.emit(this.product);
   }
 
-  onRemove(): void {
+  onRemoveProduct(): void {
     this.removeItem.emit(this.product);
   }
 }

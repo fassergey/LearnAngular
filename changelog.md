@@ -20,3 +20,24 @@
     6. created CartItemComponent
     7. added template variable appTitle
     8. created HighlightDirective
+
+### Services
+
+    1. implemented interface of CartService
+    2. created LocalStorageService
+    3. created ConfigOptionsService
+    4. created ConstantsService
+    5. created GeneratorService, ConsolePrintService
+    6. inject services into FirstComponent
+    7. created ClickHandlerDirective
+    8. implemented tests for created services in FirstComponent
+    9. applied ClickHandlerDirective to FirstComponent's elements
+
+#### Pipes
+
+    1. applied currency pipe to ProductComponent and CartItemComponent. Applied uppercase pipe to ProductComponent
+    2. made getProducts return type observable. Applied async pipe to ProductListComponent
+    3. created OrderByPipe
+    4. registered OrderByPipe in Shared module
+    5. added radio buttons to CartListComponent to change sorting order
+    6. declare and export CommonModule from SharedModule

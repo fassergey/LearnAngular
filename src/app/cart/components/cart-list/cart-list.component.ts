@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+
+import { Subscription } from 'rxjs';
 
 import { Product } from '../../../shared/models/product';
 import { CartService } from '../../services/cart.service';
@@ -10,8 +12,12 @@ import { CartItem } from '../../models/cart-item';
   styleUrls: ['./cart-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CartListComponent implements OnInit {
-  products: Map<Product, number>;
+export class CartListComponent implements OnInit, OnDestroy {
+  products: CartItem[];
+  field: string;
+  ascOrder: boolean;
+
+  private sub: Subscription;
 
   constructor(
     private cartService: CartService,
@@ -19,26 +25,44 @@ export class CartListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.products = this.cartService.products;
+    this.sub = this.cartService.products$.subscribe(data => this.products = data);
+    this.field = 'price';
+    this.ascOrder = true;
   }
 
-  onChangeItemNumber(item: CartItem): void {
-    this.cartService.changeItemNumber(item.product, item.count);
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
+  onIncreaseQuantity(product: Product): void {
+    this.cartService.increaseQuantity(product);
+  }
+
+  onDecreaseQuantity(product: Product): void {
+    this.cartService.decreaseQuantity(product);
   }
 
   onRemoveItem(product: Product): void {
-    this.cartService.removeItem(product);
+    this.cartService.removeProduct(product);
   }
 
   get numberOfGoods(): number {
-    return this.cartService.itemsNumber;
+    return this.cartService.totalQuantity;
   }
 
   get sumOfGoods(): number {
-    return this.cartService.sum;
+    return this.cartService.totalSum;
+  }
+
+  asCartItem(o: object): CartItem {
+    return o as CartItem;
   }
 
   refresh(): void {
     this.cdr.markForCheck();
+  }
+
+  trackByFn(index): number {
+    return index;
   }
 }
