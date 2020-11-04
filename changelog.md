@@ -36,7 +36,7 @@
 #### Pipes
 
     1. applied currency pipe to ProductComponent and CartItemComponent. Applied uppercase pipe to ProductComponent
-    2. made getProducts return type observable
+    2. made getProducts return type observable. Applied async pipe to ProductListComponent
     3. created OrderByPipe
     4. registered OrderByPipe in Shared module
     5. added radio buttons to CartListComponent to change sorting order
