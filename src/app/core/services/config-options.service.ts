@@ -6,6 +6,8 @@ import { ConfigModel } from '../models/config';
 export class ConfigOptionsService {
   private config: ConfigModel;
 
+  // такой метод не позволит доустановить какие-то свойства, надо устанавливать все
+  // тут хотел, чтобы вы использовали спред оператор или Object.assign
   setConfigProperties(configToSave: ConfigModel): void {
     this.config = configToSave;
   }
