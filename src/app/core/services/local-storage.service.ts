@@ -9,8 +9,13 @@ export class LocalStorageService {
     this.storage.setItem(key, serializedValue);
   }
 
-  getItem(key: string): string {
-    return this.storage.getItem(key);
+  getItem(key: string): string | object {
+    const strValue = this.storage.getItem(key);
+    try {
+      return JSON.parse(strValue);
+    } catch {
+      return strValue;
+    }
   }
 
   removeItem(key: string): void {

@@ -7,7 +7,7 @@ export class ConfigOptionsService {
   private config: ConfigModel;
 
   setConfigProperties(configToSave: ConfigModel): void {
-    this.config = configToSave;
+    this.config = {...configToSave};
   }
 
   getConfigProperties(): ConfigModel {

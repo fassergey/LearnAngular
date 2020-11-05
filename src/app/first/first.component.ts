@@ -57,9 +57,14 @@ export class FirstComponent implements OnInit {
       console.log('LocalStorageService is null');
     } else {
       const key = 'key';
-      console.log('Set value:');
+      console.log('Set string value:');
       this.localStorageService.setItem(key, 'value12345');
       console.log(`The value is: ${this.localStorageService.getItem(key)}`);
+
+      console.log('Set object value:');
+      this.localStorageService.setItem(key, { name: 'value12345', age: 32 });
+      console.log(`The value is: ${JSON.stringify(this.localStorageService.getItem(key))}`);
+
       console.log('Remove value');
       this.localStorageService.removeItem(key);
       console.log(`The value is: ${this.localStorageService.getItem(key)}`);
