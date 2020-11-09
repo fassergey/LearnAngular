@@ -1,4 +1,6 @@
-<div class="shop-title"><h2>Today in our shop:</h2></div>
+<div class="shop-title">
+  <h2>Today in our shop:</h2>
+</div>
 <div class='container'>
-  <app-product *ngFor='let product of products$ | async' [product]='product' (productBought)="onProductBought(product)"></app-product>
+  <app-product *ngFor='let product of products$ | async' [product]='product'></app-product>
 </div>

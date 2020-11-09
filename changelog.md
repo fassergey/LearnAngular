@@ -41,3 +41,9 @@
     4. registered OrderByPipe in Shared module
     5. added radio buttons to CartListComponent to change sorting order
     6. declare and export CommonModule from SharedModule
+
+##### Routing
+
+    1. implemented routing for product list
+    2. created page for product description
+    3. implemented routing for cart

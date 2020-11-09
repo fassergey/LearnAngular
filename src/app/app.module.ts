@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
@@ -27,4 +28,11 @@ import { PathNotFoundComponent } from './core/components/path-not-found/path-not
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(router: Router) {
+    const replacer = (key: string, value: any): string =>
+      typeof value === 'function' ? value.name : value;
+
+    console.log('Routes: ', JSON.stringify(router.config, replacer, 2));
+  }
+ }
