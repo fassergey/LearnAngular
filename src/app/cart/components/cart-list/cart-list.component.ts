@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 
 import { Subscription } from 'rxjs';
 
-import { Product } from '../../../shared/models/product';
+import { ProductModel } from '../../../shared/models/product';
 import { CartService } from '../../services/cart.service';
 import { CartItem } from '../../models/cart-item';
 
@@ -34,15 +34,15 @@ export class CartListComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  onIncreaseQuantity(product: Product): void {
+  onIncreaseQuantity(product: ProductModel): void {
     this.cartService.increaseQuantity(product);
   }
 
-  onDecreaseQuantity(product: Product): void {
+  onDecreaseQuantity(product: ProductModel): void {
     this.cartService.decreaseQuantity(product);
   }
 
-  onRemoveItem(product: Product): void {
+  onRemoveItem(product: ProductModel): void {
     this.cartService.removeProduct(product);
   }
 

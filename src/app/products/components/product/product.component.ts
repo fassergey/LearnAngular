@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
-import { Product } from '../../../shared/models/product';
+import { ProductModel } from '../../../shared/models/product';
 
 @Component({
   selector: 'app-product',
@@ -9,7 +9,7 @@ import { Product } from '../../../shared/models/product';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductComponent {
-  @Input() product: Product;
+  @Input() product: ProductModel;
   @Output() productBought = new EventEmitter<void>();
 
   constructor() { }

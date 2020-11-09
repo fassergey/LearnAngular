@@ -1,21 +1,40 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
 
-import { CartListComponent } from './cart/components/cart-list/cart-list.component';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { CartService } from './cart/services/cart.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('appTitle') appTitle: ElementRef;
-  @ViewChild('cartList') cartList: CartListComponent;
+
+  cartMenuItemTitle: string;
+  cartItemQty: number;
+
+  private unsubscribe: Subject<void> = new Subject();
+
+  constructor(private cartService: CartService) { }
+
+  ngOnInit(): void {
+    this.cartService.products$
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(products => this.cartItemQty = products.length);
+  }
 
   ngAfterViewInit(): void {
     this.appTitle.nativeElement.innerText = 'Fasolko\'s Stall';
   }
 
-  onCartUpdated(): void {
-    this.cartList.refresh();
+  ngOnDestroy(): void {
+    this.unsubscribe.complete();
+  }
+
+  get cartItemQuantity(): string {
+    return this.cartItemQty > 0 ? `Cart - ${this.cartItemQty}` : 'Cart';
   }
 }
