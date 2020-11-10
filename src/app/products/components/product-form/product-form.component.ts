@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -20,7 +20,8 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private productsService: ProductsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -45,12 +46,14 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
     if (product.id) {
       this.productsService.updateProduct(product);
+      this.router.navigate(['/product-list', {editedProductID: product.id}]);
     } else {
       this.productsService.createProduct(product);
+      this.onGoBack();
     }
   }
 
   onGoBack(): void {
-
+    this.router.navigate(['./../../'], { relativeTo: this.route});
   }
 }

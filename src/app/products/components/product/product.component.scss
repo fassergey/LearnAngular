@@ -6,3 +6,7 @@
 .product-description {
   cursor: pointer;
 }
+
+:host.edited > div {
+  border: 2px dotted red;
+}
