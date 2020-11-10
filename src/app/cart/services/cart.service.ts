@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { ProductModel } from '../../shared/models/product';
 import { CartItem } from '../models/cart-item';
@@ -78,6 +79,13 @@ export class CartService {
       0;
 
     this.isEmpty = !(this.products && this.products.length > 0);
+  }
+
+  getCartItemByProductId(id: number): Observable<CartItem> {
+    return this.products$
+      .pipe(
+        map((products: CartItem[]) => products.find(p => p.id === id))
+      );
   }
 
   private changeQuantity(product: ProductModel, difference: number): void {

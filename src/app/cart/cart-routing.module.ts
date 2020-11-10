@@ -3,11 +3,22 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { CartListComponent } from './components/cart-list/cart-list.component';
 import { CartItemComponent } from './components/cart-item/cart-item.component';
+import { CartComponent } from './cart.component';
 
 const routes: Routes = [
   {
     path: 'cart',
-    component: CartListComponent
+    component: CartComponent,
+    children: [
+      {
+        path: 'edit/:itemID',
+        component: CartItemComponent
+      },
+      {
+        path: '',
+        component: CartListComponent
+      }
+    ]
   }
 ];
 
@@ -16,5 +27,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class CartRoutingModule {
-  static components = [CartListComponent, CartItemComponent];
+  static components = [CartComponent, CartListComponent, CartItemComponent];
 }
