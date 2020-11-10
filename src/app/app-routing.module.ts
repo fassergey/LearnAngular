@@ -7,7 +7,7 @@ import { PathNotFoundComponent } from './core/components/path-not-found/path-not
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/product-list',
     pathMatch: 'full'
   },
   {

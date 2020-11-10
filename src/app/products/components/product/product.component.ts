@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -15,7 +15,6 @@ import { ProductsService } from '../../services/products-service';
 })
 export class ProductComponent implements OnInit, OnDestroy {
   @Input() product: ProductModel;
-  @Output() productSelected = new EventEmitter<number>();
 
   private sub: Subscription;
 
@@ -49,6 +48,6 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   onGoToProduct(): void {
-    this.router.navigate([`/product/${this.product.id}`]);
+    this.router.navigate([`product/${this.product.id}`], {relativeTo: this.route});
   }
 }
