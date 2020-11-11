@@ -1,0 +1,23 @@
+<div class="card card-default">
+  <div class="card-header">
+    <h4 class="pannel-title">
+      Order Form
+    </h4>
+  </div>
+  <div class="card-body">
+    <form (ngSubmit)="onSaveOrder()" id="order-form" #form="ngForm">
+      <div class="form-group">
+        <label for="clientFirstName">First Name</label>
+        <input type="text" class="form-control" id="clientFirstName" name="clientFirstName" placeholder="First Name"
+          required [(ngModel)]="order.clientFirstName">
+      </div>
+      <div class="form-group">
+        <label for="clientLastName">Last Name</label>
+        <input type="text" class="form-control" id="clientLastName" name="clientLastName" placeholder="Last Name"
+          [(ngModel)]="order.clientLastName">
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Save</button>
+      <button class="btn btn-primary" type="button" (click)="onGoBack()">Back</button>
+    </form>
+  </div>
+</div>

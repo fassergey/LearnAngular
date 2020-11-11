@@ -11,6 +11,8 @@ import { ProductsModule } from './products/products.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { PathNotFoundComponent } from './core/components/path-not-found/path-not-found.component';
+import { OrdersModule } from './orders/orders.module';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { PathNotFoundComponent } from './core/components/path-not-found/path-not
     CartModule,
     ProductsModule,
     SharedModule,
-    AppRoutingModule
+    OrdersModule,
+    AdminModule,
+    AppRoutingModule,
   ],
   bootstrap: [AppComponent]
 })

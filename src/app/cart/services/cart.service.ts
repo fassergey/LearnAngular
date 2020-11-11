@@ -31,15 +31,7 @@ export class CartService {
     if (idx > -1) {
       this.products[idx].count++;
     } else {
-      const newItem: CartItem = {
-        id: product.id,
-        name: product.name,
-        category: product.category,
-        description: product.description,
-        isAvailable: product.isAvailable,
-        price: product.price,
-        count: 1
-      };
+      const newItem: CartItem = { ...product, count: 1 };
       this.products.push(newItem);
     }
 

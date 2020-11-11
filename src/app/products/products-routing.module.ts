@@ -30,5 +30,10 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class ProductsRoutingModule {
-  static components = [ProductsComponent, ProductListComponent, ProductFormComponent, ProductComponent];
+  static components = [
+    ProductsComponent,
+    ProductListComponent,
+    ProductFormComponent,
+    ProductComponent
+  ];
  }
