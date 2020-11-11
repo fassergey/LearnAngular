@@ -1,17 +1,17 @@
 <div class="card card-default">
-	<div class="card-header">Order</div>
+	<div class="card-header">Order - {{order.id}}</div>
 	<div class="card-body">
 		<ul>
 			<li>FirstName: {{order.clientFirstName}}</li>
       <li>LastName: {{order.clientLastName}}</li>
-      <!-- <li *ngFor="let item of order.items">
+      <li *ngFor="let item of order.items">
         <div class="flex-container">Items:
           <div>{{item.name}}</div>
           <div>{{item.price | currency : "GBP" : true}}</div>
           <div>{{item.count}}</div>
         </div>
       </li>
-      <li>{{order.totalSum | currency : "GBP" : true}}</li> -->
+      <li>{{order.totalSum | currency : "GBP" : true}}</li>
 		</ul>
 		<button class="btn btn-warning btn-sm"
 			(click)="onEditOrder()">

@@ -1,34 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, UrlTree } from '@angular/router';
 
-import { Observable } from 'rxjs';
-import { pluck } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 
 import { CanComponentDeactivate, DialogService } from 'src/app/core';
 import { OrderModel } from '../../models/order.model';
 import { OrderArrayService } from '../../services/order-array.service';
+import { CartService } from './../../../cart/services/cart.service';
 
 @Component({
   selector: 'app-order-form',
   templateUrl: './order-form.component.html',
   styleUrls: ['./order-form.component.scss']
 })
-export class OrderFormComponent implements OnInit, CanComponentDeactivate {
+export class OrderFormComponent implements OnInit, OnDestroy, CanComponentDeactivate {
   order: OrderModel;
   originalOrder: OrderModel;
+
+  private subCart: Subscription;
+  private lastOrderIndex: number;
 
   constructor(
     private orderArrayService: OrderArrayService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private cartService: CartService
   ) { }
 
   ngOnInit(): void {
-    this.route.data.pipe(pluck('order')).subscribe((order: OrderModel) => {
-      this.order = { ...order };
-      this.originalOrder = { ...order };
+    this.lastOrderIndex = this.orderArrayService.proceedingOrdersCount + 1;
+
+    this.subCart = this.cartService.products$.subscribe(data => {
+      this.order = new OrderModel(this.lastOrderIndex, '', '', data, this.cartService.totalSum);
+      this.originalOrder = { ...this.order };
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subCart.unsubscribe();
   }
 
   onSaveOrder() {
@@ -36,7 +46,7 @@ export class OrderFormComponent implements OnInit, CanComponentDeactivate {
 
     if (order.id) {
       this.orderArrayService.updateOrder(order);
-      this.router.navigate(['/orders', {editedUserID: order.id}]);
+      this.router.navigate(['orders']);
     } else {
       this.orderArrayService.createOrder(order);
       this.onGoBack();

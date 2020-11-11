@@ -54,4 +54,8 @@ export class CartListComponent implements OnInit, OnDestroy {
   trackByFn(index): number {
     return index;
   }
+
+  onCreateOrder(): void {
+    this.router.navigate(['orders/add']);
+  }
 }

@@ -4,7 +4,6 @@ import { CanDeactivateGuard } from '../core/guards/can-deactivate.guard';
 import { OrderComponent, OrderFormComponent, OrderListComponent } from './components';
 
 import { OrdersComponent } from './orders.component';
-import { OrderResolveGuard } from './guards';
 
 const routes: Routes = [
   {
@@ -18,13 +17,10 @@ const routes: Routes = [
       {
         path: 'edit/:orderID',
         component: OrderFormComponent,
-        canDeactivate: [CanDeactivateGuard],
-        resolve: {
-          order: OrderResolveGuard
-        }
+        canDeactivate: [CanDeactivateGuard]
       },
       {
-        path: '',
+        path: 'orders-list',
         component: OrderListComponent
       },
     ]

@@ -14,6 +14,10 @@ export class OrderArrayService {
   private subject: BehaviorSubject<OrderModel[]>;
   private orders: OrderModel[] = new Array<OrderModel>();
 
+  get proceedingOrdersCount(): number {
+    return this.orders.length;
+  }
+
   getOrderById(id: number | string): Observable<OrderModel> {
     return this.orders$
       .pipe(

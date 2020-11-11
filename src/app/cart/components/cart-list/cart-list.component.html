@@ -17,7 +17,8 @@
         </div>
       </div>
 
-      <div class="row cart-item" appHighlight *ngFor='let item of products | orderBy : field : ascOrder; trackBy:trackByFn'>
+      <div class="row cart-item" appHighlight
+        *ngFor='let item of products | orderBy : field : ascOrder; trackBy:trackByFn'>
         <div class="col-6">
           {{asCartItem(item).name}}
         </div>
@@ -41,9 +42,12 @@
       <pre class="card card-block card-header">Select field to order cart items:</pre>
       <div class="form-inline">
         <div class="btn-group" btnRadioGroup>
-          <label class="btn btn-success" btnRadio="asc" [class.selected]="field === 'price'" (click)="field='price'">Price</label>
-          <label class="btn btn-success" btnRadio="desc" [class.selected]="field === 'count'" (click)="field='count'">Count</label>
-          <label class="btn btn-success" btnRadio="name" [class.selected]="field === 'name'" (click)="field='name'">Name</label>
+          <label class="btn btn-success" btnRadio="asc" [class.selected]="field === 'price'"
+            (click)="field='price'">Price</label>
+          <label class="btn btn-success" btnRadio="desc" [class.selected]="field === 'count'"
+            (click)="field='count'">Count</label>
+          <label class="btn btn-success" btnRadio="name" [class.selected]="field === 'name'"
+            (click)="field='name'">Name</label>
         </div>
       </div>
 
@@ -51,9 +55,14 @@
       <div class="form-inline">
         <div class="btn-group" btnRadioGroup>
           <label class="btn btn-success" btnRadio="asc" [class.selected]="ascOrder" (click)="ascOrder=true">Asc</label>
-          <label class="btn btn-success" btnRadio="desc" [class.selected]="!ascOrder" (click)="ascOrder=false">Desc</label>
+          <label class="btn btn-success" btnRadio="desc" [class.selected]="!ascOrder"
+            (click)="ascOrder=false">Desc</label>
         </div>
       </div>
+    </div>
+
+    <div class="m-3">
+      <button class="btn btn-success" type="button" (click)="onCreateOrder()">Create Order</button>
     </div>
   </div>
 </div>

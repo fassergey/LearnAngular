@@ -16,6 +16,36 @@
         <input type="text" class="form-control" id="clientLastName" name="clientLastName" placeholder="Last Name"
           [(ngModel)]="order.clientLastName">
       </div>
+
+      <div>
+        <label>Items in your cart:</label>
+        <div class="container">
+          <div class="row cart-item">
+            <div class="col-6">
+              <b>Product Name</b>
+            </div>
+            <div class="col">
+              <b>Price</b>
+            </div>
+            <div class="col">
+              <b>Quantity</b>
+            </div>
+          </div>
+
+          <div class="row cart-item" *ngFor="let item of order.items">
+            <div class="col-6">
+              {{item.name}}
+            </div>
+            <div class="col">
+              {{item.price | currency : 'GBP'}}
+            </div>
+            <div class="col">
+              {{item.count}}
+            </div>
+          </div>
+        </div>
+      </div>>
+
       <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Save</button>
       <button class="btn btn-primary" type="button" (click)="onGoBack()">Back</button>
     </form>
