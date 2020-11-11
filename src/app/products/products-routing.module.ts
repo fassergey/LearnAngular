@@ -10,6 +10,10 @@ const routes: Routes = [
     component: ProductsComponent,
     children: [
       {
+        path: 'add',
+        component: ProductFormComponent
+      },
+      {
         path: 'edit/:productID',
         component: ProductFormComponent
       },
