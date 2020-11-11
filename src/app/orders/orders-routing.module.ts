@@ -20,7 +20,7 @@ const routes: Routes = [
         canDeactivate: [CanDeactivateGuard]
       },
       {
-        path: 'orders-list',
+        path: '',
         component: OrderListComponent
       },
     ]
