@@ -6,13 +6,15 @@ import { catchError, map } from 'rxjs/operators';
 import { OrderModel } from '../models/order.model';
 
 @Injectable({
-  providedIn: 'any'
+  providedIn: 'root'
 })
 export class OrderArrayService {
-  orders$: Observable<OrderModel[]>;
-
-  private subject: BehaviorSubject<OrderModel[]>;
   private orders: OrderModel[] = new Array<OrderModel>();
+  private subject: BehaviorSubject<OrderModel[]> = new BehaviorSubject<OrderModel[]>(this.orders);
+
+  get orders$(): Observable<OrderModel[]> {
+    return this.subject.asObservable();
+  }
 
   get proceedingOrdersCount(): number {
     return this.orders.length;

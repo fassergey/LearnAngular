@@ -18,7 +18,7 @@ export class OrderFormComponent implements OnInit, OnDestroy, CanComponentDeacti
   originalOrder: OrderModel;
 
   private subCart: Subscription;
-  private lastOrderIndex: number;
+  private nextOrderIndex: number;
 
   constructor(
     private orderArrayService: OrderArrayService,
@@ -29,10 +29,10 @@ export class OrderFormComponent implements OnInit, OnDestroy, CanComponentDeacti
   ) { }
 
   ngOnInit(): void {
-    this.lastOrderIndex = this.orderArrayService.proceedingOrdersCount + 1;
+    this.nextOrderIndex = this.orderArrayService.proceedingOrdersCount + 1;
 
     this.subCart = this.cartService.products$.subscribe(data => {
-      this.order = new OrderModel(this.lastOrderIndex, '', '', data, this.cartService.totalSum);
+      this.order = new OrderModel('', '', data, this.cartService.totalSum, null);
       this.originalOrder = { ...this.order };
     });
   }
@@ -43,15 +43,16 @@ export class OrderFormComponent implements OnInit, OnDestroy, CanComponentDeacti
 
   onSaveOrder() {
     const order = {...this.order};
+    order.id = this.nextOrderIndex;
 
-    if (order.id) {
+    if (this.order.id) {
       this.orderArrayService.updateOrder(order);
-      this.router.navigate(['orders']);
     } else {
       this.orderArrayService.createOrder(order);
-      this.onGoBack();
     }
-    this.originalOrder = {...this.order};
+
+    this.originalOrder = {...this.order, id: this.nextOrderIndex};
+    this.router.navigate(['orders']);
   }
 
   onGoBack() {
