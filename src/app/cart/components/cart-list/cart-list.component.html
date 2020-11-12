@@ -1,26 +1,53 @@
-<div class='container'>
-  <div *ngIf="products && products.length > 0; else elseBlock">
-    <ul>
-      <h2>You Have In Your Cart {{numberOfGoods}} position(s):</h2>
-      <li appHighlight *ngFor='let item of products | orderBy : field : ascOrder; trackBy:trackByFn'>
-        <app-cart-item [product]="asCartItem(item)" [count]="asCartItem(item).count"
-          (increaseQuantity)="onIncreaseQuantity($event)" (decreaseQuantity)="onDecreaseQuantity($event)"
-          (removeItem)="onRemoveItem($event)">
-        </app-cart-item>
-      </li>
-    </ul>
+<div class='flex-container'>
+  <div class="widen" *ngIf="products && products.length > 0; else elseBlock">
+    <h4>You Have In Your Cart {{numberOfGoods}} position(s):</h4>
+    <div class="container">
+      <div class="row cart-item">
+        <div class="col-6">
+          <b>Product Name</b>
+        </div>
+        <div class="col">
+          <b>Price</b>
+        </div>
+        <div class="col">
+          <b>Quantity</b>
+        </div>
+        <div class="col">
+          <b>Action</b>
+        </div>
+      </div>
 
-    <div class="summa">
-      <h4>Sum: ${{sumOfGoods}}</h4>
+      <div class="row cart-item" appHighlight
+        *ngFor='let item of products | orderBy : field : ascOrder; trackBy:trackByFn'>
+        <div class="col-6">
+          {{asCartItem(item).name}}
+        </div>
+        <div class="col">
+          {{asCartItem(item).price | currency : 'GBP'}}
+        </div>
+        <div class="col">
+          {{asCartItem(item).count}}
+        </div>
+        <div class="col">
+          <button class="btn btn-success" type="button" (click)="onEdit(asCartItem(item).id)">Edit</button>
+        </div>
+      </div>
     </div>
 
-    <div class="sorting">
+    <div class="summa">
+      <b>Sum: ${{sumOfGoods}}</b>
+    </div>
+
+    <div class="sorting" *ngIf="products && products.length > 1">
       <pre class="card card-block card-header">Select field to order cart items:</pre>
       <div class="form-inline">
         <div class="btn-group" btnRadioGroup>
-          <label class="btn btn-success" btnRadio="asc" [class.selected]="field === 'price'" (click)="field='price'">Price</label>
-          <label class="btn btn-success" btnRadio="desc" [class.selected]="field === 'count'" (click)="field='count'">Count</label>
-          <label class="btn btn-success" btnRadio="name" [class.selected]="field === 'name'" (click)="field='name'">Name</label>
+          <label class="btn btn-success" btnRadio="asc" [class.selected]="field === 'price'"
+            (click)="field='price'">Price</label>
+          <label class="btn btn-success" btnRadio="desc" [class.selected]="field === 'count'"
+            (click)="field='count'">Count</label>
+          <label class="btn btn-success" btnRadio="name" [class.selected]="field === 'name'"
+            (click)="field='name'">Name</label>
         </div>
       </div>
 
@@ -28,12 +55,18 @@
       <div class="form-inline">
         <div class="btn-group" btnRadioGroup>
           <label class="btn btn-success" btnRadio="asc" [class.selected]="ascOrder" (click)="ascOrder=true">Asc</label>
-          <label class="btn btn-success" btnRadio="desc" [class.selected]="!ascOrder" (click)="ascOrder=false">Desc</label>
+          <label class="btn btn-success" btnRadio="desc" [class.selected]="!ascOrder"
+            (click)="ascOrder=false">Desc</label>
         </div>
       </div>
     </div>
+
+    <div class="m-3">
+      <button class="btn btn-success" type="button" (click)="onCreateOrder()">Create Order</button>
+    </div>
   </div>
-  <ng-template #elseBlock>
-    <h2>Your Cart is empty</h2>
-  </ng-template>
 </div>
+
+<ng-template #elseBlock>
+  <h2>Your Cart is empty</h2>
+</ng-template>

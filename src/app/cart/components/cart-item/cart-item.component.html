@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="product && count > 0">
   <div>{{product.name}}</div>
   <div>{{product.price | currency : "GBP" : true}}</div>
   <div>
@@ -10,3 +10,4 @@
     <button type="button" class="btn btn-danger" (click)="onRemoveProduct()">x</button>
   </div>
 </div>
+<button type="button" (click)="onGoBack()">Go Back</button>

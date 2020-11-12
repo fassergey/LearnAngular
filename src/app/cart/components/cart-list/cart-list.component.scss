@@ -1,4 +1,4 @@
-.container {
+.flex-container {
   display: flex;
   justify-content: center;
   margin-top: 2em;
@@ -15,4 +15,12 @@
 .selected {
   background-color: darkgreen;
   border-color: darkgreen;
+}
+
+.cart-item {
+  cursor: pointer;
+}
+
+.widen {
+  width: 200%;
 }

@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-description {
+  cursor: pointer;
+}
+
+:host.edited > div {
+  border: 2px dotted red;
+}

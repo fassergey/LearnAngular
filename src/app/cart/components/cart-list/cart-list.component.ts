@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
-import { Product } from '../../../shared/models/product';
 import { CartService } from '../../services/cart.service';
 import { CartItem } from '../../models/cart-item';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart-list',
@@ -21,7 +21,8 @@ export class CartListComponent implements OnInit, OnDestroy {
 
   constructor(
     private cartService: CartService,
-    private cdr: ChangeDetectorRef
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -34,16 +35,8 @@ export class CartListComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  onIncreaseQuantity(product: Product): void {
-    this.cartService.increaseQuantity(product);
-  }
-
-  onDecreaseQuantity(product: Product): void {
-    this.cartService.decreaseQuantity(product);
-  }
-
-  onRemoveItem(product: Product): void {
-    this.cartService.removeProduct(product);
+  onEdit(id: number): void {
+    this.router.navigate([`edit/${id}`], {relativeTo: this.route});
   }
 
   get numberOfGoods(): number {
@@ -58,11 +51,11 @@ export class CartListComponent implements OnInit, OnDestroy {
     return o as CartItem;
   }
 
-  refresh(): void {
-    this.cdr.markForCheck();
-  }
-
   trackByFn(index): number {
     return index;
+  }
+
+  onCreateOrder(): void {
+    this.router.navigate(['orders/add']);
   }
 }

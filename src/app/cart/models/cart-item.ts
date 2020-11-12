@@ -1,5 +1,5 @@
-import { Product } from '../../shared/models/product';
+import { ProductModel } from '../../shared/models/product';
 
-export interface CartItem extends Product {
+export interface CartItem extends ProductModel {
   count: number;
 }

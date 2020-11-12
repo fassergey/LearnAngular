@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { Product } from '../../shared/models/product';
+import { ProductModel } from '../../shared/models/product';
 import { CartItem } from '../models/cart-item';
 
 @Injectable({
@@ -25,19 +26,12 @@ export class CartService {
     return this.subject.asObservable();
   }
 
-  addProduct(product: Product): void {
+  addProduct(product: ProductModel): void {
     const idx = this.getItemIndex(product);
     if (idx > -1) {
       this.products[idx].count++;
     } else {
-      const newItem: CartItem = {
-        name: product.name,
-        category: product.category,
-        description: product.description,
-        isAvailable: product.isAvailable,
-        price: product.price,
-        count: 1
-      };
+      const newItem: CartItem = { ...product, count: 1 };
       this.products.push(newItem);
     }
 
@@ -46,15 +40,15 @@ export class CartService {
     this.subject.next(this.products);
   }
 
-  increaseQuantity(product: Product): void {
+  increaseQuantity(product: ProductModel): void {
     this.changeQuantity(product, 1);
   }
 
-  decreaseQuantity(product: Product): void {
+  decreaseQuantity(product: ProductModel): void {
     this.changeQuantity(product, -1);
   }
 
-  removeProduct(product: Product): void {
+  removeProduct(product: ProductModel): void {
     const idx = this.getItemIndex(product);
     this.products.splice(idx, 1);
     this.updateCartData();
@@ -79,7 +73,14 @@ export class CartService {
     this.isEmpty = !(this.products && this.products.length > 0);
   }
 
-  private changeQuantity(product: Product, difference: number): void {
+  getCartItemByProductId(id: number): Observable<CartItem> {
+    return this.products$
+      .pipe(
+        map((products: CartItem[]) => products.find(p => p.id === id))
+      );
+  }
+
+  private changeQuantity(product: ProductModel, difference: number): void {
     const idx = this.getItemIndex(product);
     this.products[idx].count += difference;
 
@@ -92,7 +93,7 @@ export class CartService {
     this.subject.next(this.products);
   }
 
-  private getItemIndex(product: Product): number {
+  private getItemIndex(product: ProductModel): number {
     return this.products.findIndex(ci => ci.name === product.name);
   }
 
