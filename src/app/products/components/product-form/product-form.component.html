@@ -5,7 +5,7 @@
     </h4>
   </div>
   <div class="card-body">
-    <form *ngIf="product" (ngSubmit)="onSaveProduct()" id="product-form" #form="ngForm">
+    <form (ngSubmit)="onSaveProduct()" id="product-form" #form="ngForm">
       <div class="form-group">
         <label for="name">Name</label>
         <input type="text" class="form-control" id="name" name="name" placeholder="Name" required
