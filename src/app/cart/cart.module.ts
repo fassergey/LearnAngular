@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+import { LocalStorageService } from '../core/services/local-storage.service';
 import { SharedModule } from './../shared/shared.module';
 import { CartRoutingModule } from './cart-routing.module';
 
@@ -11,5 +12,8 @@ import { CartRoutingModule } from './cart-routing.module';
     SharedModule,
     CartRoutingModule
   ],
+  providers: [
+    { provide: LocalStorageService, useClass: LocalStorageService }
+  ]
 })
 export class CartModule { }
