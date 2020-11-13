@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, UrlTree } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 
 import { CanComponentDeactivate, DialogService } from 'src/app/core';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { OrderModel } from '../../models/order.model';
 import { OrderArrayService } from '../../services/order-array.service';
 import { CartService } from './../../../cart/services/cart.service';
@@ -25,7 +26,8 @@ export class OrderFormComponent implements OnInit, OnDestroy, CanComponentDeacti
     private route: ActivatedRoute,
     private router: Router,
     private dialogService: DialogService,
-    private cartService: CartService
+    private cartService: CartService,
+    private localStorageService: LocalStorageService
   ) { }
 
   ngOnInit(): void {
@@ -49,6 +51,8 @@ export class OrderFormComponent implements OnInit, OnDestroy, CanComponentDeacti
       this.orderArrayService.updateOrder(order);
     } else {
       this.orderArrayService.createOrder(order);
+      this.localStorageService.removeItem(this.cartService.localStorageKey);
+      this.cartService.removeAllProducts();
     }
 
     this.originalOrder = {...this.order, id: this.nextOrderIndex};

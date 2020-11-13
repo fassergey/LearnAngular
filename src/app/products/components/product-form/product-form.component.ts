@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Category } from './../../../shared/models/category.enum';
 import { ProductModel } from 'src/app/shared/models/product';
 import { ProductsService } from '../../services/products-service';
+import { pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-form',
@@ -25,14 +26,9 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.product = new ProductModel();
-
-    const id = +this.route.snapshot.paramMap.get('productID');
-    const observer = {
-      next: (product: ProductModel) => this.product = { ...product },
-      error: (err: any) => console.log(err)
-    };
-    this.sub = this.productsService.getProduct(id).subscribe(observer);
+    this.route.data.pipe(pluck('product')).subscribe((product: ProductModel) => {
+      this.product = { ...product };
+    });
 
     this.categories = Object.keys(Category);
   }

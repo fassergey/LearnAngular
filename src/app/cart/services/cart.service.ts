@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 import { ProductModel } from '../../shared/models/product';
 import { CartItem } from '../models/cart-item';
+import { LocalStorageService } from './../../core/services/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,13 @@ export class CartService {
   totalQuantity: number;
   totalSum: number;
   isEmpty: boolean;
+  localStorageKey = 'cart';
 
   private products: CartItem[];
   private subject: BehaviorSubject<CartItem[]>;
 
-  constructor() {
-    this.products = new Array<CartItem>();
+  constructor(private localStorageService: LocalStorageService) {
+    this.products = (this.localStorageService.getItem(this.localStorageKey) as CartItem[]) ?? new Array<CartItem>();
     this.subject = new BehaviorSubject<CartItem[]>(this.products);
   }
 
@@ -36,8 +38,6 @@ export class CartService {
     }
 
     this.updateCartData();
-
-    this.subject.next(this.products);
   }
 
   increaseQuantity(product: ProductModel): void {
@@ -52,13 +52,11 @@ export class CartService {
     const idx = this.getItemIndex(product);
     this.products.splice(idx, 1);
     this.updateCartData();
-    this.subject.next(this.products);
   }
 
   removeAllProducts(): void {
     this.products = [];
     this.updateCartData();
-    this.subject.next(this.products);
   }
 
   updateCartData(): void {
@@ -71,6 +69,10 @@ export class CartService {
       0;
 
     this.isEmpty = !(this.products && this.products.length > 0);
+
+    this.localStorageService.setItem(this.localStorageKey, this.products);
+
+    this.subject.next(this.products);
   }
 
   getCartItemByProductId(id: number): Observable<CartItem> {
@@ -89,8 +91,6 @@ export class CartService {
     }
 
     this.updateCartData();
-
-    this.subject.next(this.products);
   }
 
   private getItemIndex(product: ProductModel): number {

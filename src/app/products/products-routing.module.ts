@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ProductComponent, ProductFormComponent, ProductListComponent } from './components';
 import { ProductsComponent } from './products.component';
+import { ProductResolveGuard } from './guards/product-resolve.guard';
 
 const routes: Routes = [
   {
@@ -15,7 +16,10 @@ const routes: Routes = [
       },
       {
         path: 'edit/:productID',
-        component: ProductFormComponent
+        component: ProductFormComponent,
+        resolve: {
+          product: ProductResolveGuard
+        }
       },
       {
         path: 'product/:productID',
