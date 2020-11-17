@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Router } from '@angular/router';
@@ -26,6 +27,7 @@ import { OrdersModule } from './orders/orders.module';
     ProductsModule,
     SharedModule,
     OrdersModule,
+    HttpClientModule,
     AppRoutingModule,
   ],
   bootstrap: [AppComponent]

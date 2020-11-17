@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { ProductModel } from '../../../shared/models/product';
-import { ProductsService } from '../../services/products-service';
+import { AsyncProductsService } from '../../services';
 
 @Component({
   selector: 'app-product-list',
@@ -13,17 +13,17 @@ import { ProductsService } from '../../services/products-service';
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit {
-  products$: Observable<ProductModel[]>;
+  products$: Promise<ProductModel[]>;
 
   private editedProduct: ProductModel;
 
   constructor(
-    private productsService: ProductsService,
+    private asyncProductsService: AsyncProductsService,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.products$ = this.productsService.products$;
+    this.products$ = this.asyncProductsService.getProducts();
 
     const observer = {
       next: (product: ProductModel) => {
@@ -36,7 +36,12 @@ export class ProductListComponent implements OnInit {
     };
     this.route.paramMap
       .pipe(
-        switchMap((params: ParamMap) => this.productsService.getProduct(+params.get('editedProductID')))
+        switchMap((params: ParamMap) => {
+          const editedProductID = params.get('editedProductID');
+          return editedProductID
+            ? this.asyncProductsService.getProduct(+editedProductID)
+            : of(null);
+        })
       )
       .subscribe(observer);
   }

@@ -1,0 +1,11 @@
+{
+  "products": [
+        { "id": 1, "name": "Snowman", "description": "Ice-cream Snowman", "price": 5, "category": "Food", "isAvailable": true },
+        { "id": 2, "name": "HotHands", "description": "Gloves", "price": 15, "category": "Clothing", "isAvailable": false },
+        { "id": 3, "name": "BigFoot", "description": "Boots", "price": 50, "category": "Clothing", "isAvailable": true },
+        { "id": 4, "name": "Cinderella", "description": "Confectionaries", "price": 3, "category": "Food", "isAvailable": true },
+        { "id": 5, "name": "EatMe", "description": "Bread", "price": 1, "category": "Food", "isAvailable": true },
+        { "id": 6, "name": "Renault", "description": "Car", "price": 8000, "category": "Transport", "isAvailable": false },
+        { "id": 7, "name": "Teammate", "description": "Bycicle", "price": 35, "category": "Transport", "isAvailable": true }
+    ]
+}
