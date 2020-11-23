@@ -10,6 +10,7 @@ const routes: Routes = [
     path: 'product-list',
     component: ProductsComponent,
     children: [
+      // эти два объекта, думаю, больше подходят для админки, чем для обычного пользователя
       {
         path: 'add',
         component: ProductFormComponent
