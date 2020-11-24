@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../core/guards/auth.guard';
+import { ProductFormComponent, ProductResolveGuard } from '../products';
 import { AdminComponent } from './admin.component';
 import { AdminDashboardComponent, ManageProductsComponent, ManageOrdersComponent } from './components';
 
@@ -12,13 +13,24 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: '',
+        path: 'products',
+        component: ManageProductsComponent,
         children: [
-          { path: 'products', component: ManageProductsComponent },
-          { path: 'orders', component: ManageOrdersComponent },
-          { path: '', component: AdminDashboardComponent }
+          {
+            path: 'add',
+            component: ProductFormComponent
+          },
+          {
+            path: 'edit/:productID',
+            component: ProductFormComponent,
+            resolve: {
+              product: ProductResolveGuard
+            }
+          }
         ]
-      }
+      },
+      { path: 'orders', component: ManageOrdersComponent },
+      { path: '', component: AdminDashboardComponent }
     ]
   }
 
@@ -33,6 +45,7 @@ export class AdminRoutingModule {
     AdminComponent,
     AdminDashboardComponent,
     ManageProductsComponent,
-    ManageOrdersComponent
+    ManageOrdersComponent,
+    ProductFormComponent
   ];
- }
+}

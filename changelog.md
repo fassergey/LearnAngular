@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
     1. created project
     2. modified in package.json description of command 'start'
@@ -21,7 +21,7 @@
     7. added template variable appTitle
     8. created HighlightDirective
 
-### Services
+## Services
 
     1. implemented interface of CartService
     2. created LocalStorageService
@@ -33,7 +33,7 @@
     8. implemented tests for created services in FirstComponent
     9. applied ClickHandlerDirective to FirstComponent's elements
 
-#### Pipes
+## Pipes
 
     1. applied currency pipe to ProductComponent and CartItemComponent. Applied uppercase pipe to ProductComponent
     2. made getProducts return type observable. Applied async pipe to ProductListComponent
@@ -42,7 +42,7 @@
     5. added radio buttons to CartListComponent to change sorting order
     6. declare and export CommonModule from SharedModule
 
-##### Routing
+## Routing
 
     1. implemented routing for product list
     2. created page for product description
@@ -53,7 +53,7 @@
     7. applied lazy loading to admin module
     8. changed cart service to store cart items in the local storage
 
-###### HttpClient
+## HttpClient
 
     1. added json-server
     2. changed command start in package.json
