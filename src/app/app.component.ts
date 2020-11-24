@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { CartService } from './cart/services/cart.service';
+import { AppSettingsService } from './core/services/app-settings.service';
 
 @Component({
   selector: 'app-root',
@@ -18,12 +19,17 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private cartService: CartService) { }
+  constructor(
+    private cartService: CartService,
+    private appSettingsService: AppSettingsService
+    ) { }
 
   ngOnInit(): void {
     this.cartService.products$
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(products => this.cartItemQty = products.length);
+
+    this.appSettingsService.loadAppSettings();
   }
 
   ngAfterViewInit(): void {

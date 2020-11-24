@@ -1,6 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { settings } from 'cluster';
 import { throwError } from 'rxjs';
 
 import { catchError, map, retry, share } from 'rxjs/operators';
@@ -27,21 +26,19 @@ export class AppSettingsService {
       this.http.get<AppSettingsModel>('./assets/app-settings.json')
         .pipe(
           retry(2),
-          share(),
-          map((sets: AppSettingsModel) => {
-            if (settings) {
-              this.appSettings = sets;
-              this.localStorageService.setItem(this.appSettingsKey, sets);
-            } else {
-              this.appSettings = new AppSettingsModel();
-              this.appSettings.name = 'noname';
-              this.appSettings.author = 'anonymous';
-              this.appSettings.company = 'Epam Systems';
-              this.appSettings.date = new Date();
-            }
-          }),
           catchError(this.handleError)
-        );
+        ).subscribe((sets: AppSettingsModel) => {
+          if (sets) {
+            this.appSettings = sets;
+            this.localStorageService.setItem(this.appSettingsKey, sets);
+          } else {
+            this.appSettings = new AppSettingsModel();
+            this.appSettings.name = 'noname';
+            this.appSettings.author = 'anonymous';
+            this.appSettings.company = 'Epam Systems';
+            this.appSettings.date = new Date();
+          }
+        });
     }
   }
 
