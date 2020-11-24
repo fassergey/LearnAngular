@@ -58,3 +58,5 @@
     1. added json-server
     2. changed command start in package.json
     3. implemented AsyncProductsService
+    4. implemented interceptor for requests which includes 'products'
+    5. implemented AppSettingsService

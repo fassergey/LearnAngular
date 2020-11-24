@@ -68,7 +68,8 @@
       "category": "Furniture",
       "description": "Antique chair",
       "price": 200,
-      "id": 9
+      "id": 9,
+      "isAvailable": true
     }
   ]
 }

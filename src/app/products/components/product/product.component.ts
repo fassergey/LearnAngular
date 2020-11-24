@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 
 import { ProductModel } from '../../../shared/models/product';
 import { CartService } from '../../../cart/services/cart.service';
-import { ProductsService } from '../../services/products-service';
+import { AsyncProductsService } from '../../services';
 
 @Component({
   selector: 'app-product',
@@ -21,7 +21,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private productsService: ProductsService,
+    private asyncProductService: AsyncProductsService,
     private cartService: CartService
   ) { }
 
@@ -34,7 +34,7 @@ export class ProductComponent implements OnInit, OnDestroy {
         },
         error: (err: any) => console.log(err)
       };
-      this.sub = this.productsService.getProduct(id).subscribe(observer);
+      this.sub = this.asyncProductService.getProduct(id).subscribe(observer);
     }
   }
 

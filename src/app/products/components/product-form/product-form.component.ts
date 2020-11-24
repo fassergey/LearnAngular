@@ -42,14 +42,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   onSaveProduct(): void {
     const product = { ...this.product };
 
-    // if (product.id) {
-    //   this.productsService.updateProduct(product);
-    //   this.router.navigate(['/product-list', { editedProductID: product.id }]);
-    // } else {
-    //   this.productsService.createProduct(product);
-    //   this.onGoBack();
-    // }
-
     const method = product.id ? 'updateProduct' : 'createProduct';
     const observer = {
       next: () => {
