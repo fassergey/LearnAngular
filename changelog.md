@@ -60,3 +60,8 @@
     3. implemented AsyncProductsService
     4. implemented interceptor for requests which includes 'products'
     5. implemented AppSettingsService
+
+## Ngrx
+
+    1. created ProductsState and AppState.
+    2. 

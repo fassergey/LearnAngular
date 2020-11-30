@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PathNotFoundComponent } from './core/components/path-not-found/path-not-found.component';
 import { OrdersModule } from './orders/orders.module';
 import { httpInterceptorProviders } from './core/interceptors/index';
+import { RootStoreModule } from './core/@ngrx/root-store.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { httpInterceptorProviders } from './core/interceptors/index';
     SharedModule,
     OrdersModule,
     HttpClientModule,
+    RootStoreModule,
     AppRoutingModule,
   ],
   bootstrap: [ AppComponent ],

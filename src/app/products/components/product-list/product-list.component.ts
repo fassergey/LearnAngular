@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
+import { select, Store } from '@ngrx/store';
+
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 import { ProductModel } from '../../../shared/models/product';
 import { AsyncProductsService } from '../../services';
+import { IAppState } from './../../../core/@ngrx';
+import { ProductsState } from './../../../core/@ngrx/products/products.state';
 
 @Component({
   selector: 'app-product-list',
@@ -13,17 +17,18 @@ import { AsyncProductsService } from '../../services';
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit {
-  products$: Promise<ProductModel[]>;
+  productsState$: Observable<ProductsState>;
 
   private editedProduct: ProductModel;
 
   constructor(
     private asyncProductsService: AsyncProductsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<IAppState>
   ) { }
 
   ngOnInit(): void {
-    this.products$ = this.asyncProductsService.getProducts();
+    this.productsState$ = this.store.pipe(select('products'), tap(x => console.log(x)));
 
     const observer = {
       next: (product: ProductModel) => {

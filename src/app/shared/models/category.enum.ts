@@ -4,4 +4,5 @@ export enum Category {
   Furniture = 'Furniture',
   Transport = 'Transport',
   Clothing = 'Clothing',
+  Other = 'Other'
 }
