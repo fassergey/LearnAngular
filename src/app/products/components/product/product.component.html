@@ -8,4 +8,5 @@
     <div>isAvailable <input type="checkbox" disabled [checked]="product.isAvailable" /></div>
   </div>
   <button type="button" class="btn btn-primary" (click)="onBuy()" [disabled]="!product.isAvailable">Buy</button>
+  <button type="button" class="btn btn-warning" (click)="onEdit()">Edit</button>
 </div>

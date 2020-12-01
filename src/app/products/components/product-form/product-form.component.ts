@@ -2,12 +2,16 @@ import { Location } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Subscription } from 'rxjs';
-import { pluck } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { Category } from './../../../shared/models/category.enum';
-import { ProductModel } from 'src/app/shared/models/product';
+import { ProductModel, IProduct } from 'src/app/shared/models/product';
 import { AsyncProductsService } from '../../services';
+import * as ProductsActions from 'src/app/core/@ngrx/products/products.actions';
+import { IAppState } from 'src/app/core/@ngrx';
+import { ProductsState } from 'src/app/core/@ngrx/products/products.state';
 
 @Component({
   selector: 'app-product-form',
@@ -19,24 +23,64 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   categories: string[];
 
   private sub: Subscription;
+  private componentDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(
     private asyncProductsService: AsyncProductsService,
-    private route: ActivatedRoute,
     private router: Router,
-    private location: Location
+    private route: ActivatedRoute,
+    private location: Location,
+    private store: Store<IAppState>
   ) { }
 
   ngOnInit(): void {
-    this.route.data.pipe(pluck('product')).subscribe((product: ProductModel) => {
-      this.product = { ...product };
-    });
+    const id = +this.route.snapshot.paramMap.get('productID');
+    if (id > 0) {
+      let observer: any = {
+        next: (productsState: ProductsState) => {
+            this.product = productsState.selectedProduct
+              ? {...productsState.selectedProduct} as ProductModel
+              : new ProductModel();
+        },
+        error(err) {
+          console.log(err);
+        },
+        complete() {
+          console.log('Stream is completed');
+        }
+      };
+
+      this.store
+        .pipe(
+          select('products'),
+          takeUntil(this.componentDestroyed$)
+        )
+        .subscribe(observer);
+
+      observer = {
+        ...observer,
+        next: () => {
+          this.store.dispatch(ProductsActions.getProduct({ productID: +id }));
+        }
+      };
+
+      this.route.paramMap.subscribe(observer);
+    }
+
+    const product = { ...this.product } as IProduct;
+    if (product.id) {
+      this.store.dispatch(ProductsActions.updateProduct({ product }));
+    } else {
+      this.store.dispatch(ProductsActions.createProduct({ product }));
+    }
+
 
     this.categories = Object.keys(Category);
   }
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
+    this.componentDestroyed$.complete();
   }
 
   onSaveProduct(): void {

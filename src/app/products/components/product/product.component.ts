@@ -72,6 +72,10 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.cartService.addProduct(this.product);
   }
 
+  onEdit(): void {
+    this.router.navigate([`admin/products/edit/${this.product.id}`]);
+  }
+
   onGoToProduct(): void {
     this.router.navigate([`product/${this.product.id}`], { relativeTo: this.route });
   }

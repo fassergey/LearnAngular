@@ -28,14 +28,14 @@ const reducer = createReducer(
     ProductsActions.getProductsError,
     ProductsActions.getProductError,
     (state, { error }) => {
-    console.log('GET_PRODUCTS/PRODUCT_ERROR action being handled!');
-    return {
-      ...state,
-      loading: false,
-      loaded: false,
-      error
-    };
-  }),
+      console.log('GET_PRODUCTS/PRODUCT_ERROR action being handled!');
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error
+      };
+    }),
 
   // GET PRODUCT
   on(ProductsActions.getProduct, state => {
@@ -67,6 +67,26 @@ const reducer = createReducer(
   on(ProductsActions.updateProduct, state => {
     console.log('UPDATE_PRODUCT action being handled!');
     return { ...state };
+  }),
+  on(ProductsActions.updateProductSuccess, (state, { product }) => {
+    console.log('UPDATE_PRODUCT_SUCCESS action being handled!');
+    const data = [...state.data];
+
+    const index = data.findIndex(t => t.id === product.id);
+
+    data[index] = { ...product };
+
+    return {
+      ...state,
+      data
+    };
+  }),
+  on(ProductsActions.updateProductError, (state, { error }) => {
+    console.log('UPDATE_PRODUCT_ERROR action being handled!');
+    return {
+      ...state,
+      error
+    };
   }),
 
   // DELETE PRODUCT

@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { pluck, switchMap, catchError, map } from 'rxjs/operators';
+import { pluck, switchMap, catchError, map, concatMap } from 'rxjs/operators';
 
 import * as ProductsActions from './products.actions';
 import { AsyncProductsService } from 'src/app/products/services/async-products.service';
+import { IProduct, ProductModel } from 'src/app/shared/models/product';
 
 @Injectable()
 export class ProductsEffects {
 
   constructor(
     private actions$: Actions,
-    private asyncProductService: AsyncProductsService
+    private asyncProductService: AsyncProductsService,
+    private router: Router
   ) { }
 
   getProducts$: Observable<Action> = createEffect(() =>
@@ -48,6 +51,22 @@ export class ProductsEffects {
             return ProductsActions.getProductSuccess({ product });
           }),
           catchError(error => of(ProductsActions.getProductError({ error })))
+        )
+      )
+    ));
+
+  updateProduct$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductsActions.updateProduct),
+      pluck('product'),
+      concatMap((product: ProductModel) => this.asyncProductService.updateProduct(product)
+        .pipe(
+          map((updatedProduct: IProduct) => {
+            this.router.navigate(['/']);
+            return ProductsActions.updateProductSuccess({ product: updatedProduct });
+          }),
+          catchError(error => of(ProductsActions.updateProductError({ error }))
+          )
         )
       )
     ));

@@ -32,14 +32,31 @@ export const getProductError = createAction(
 // CREATE PRODUCT
 export const createProduct = createAction(
   '[Product Form Page] CREATE_PRODUCT',
-  props<{ productID: number }>()
+  props<{ product: IProduct }>()
+);
+export const createProductSuccess = createAction(
+  '[Create Product Effect] CREATE_PRODUCT_SUCCESS',
+  props<{ product: IProduct }>()
+);
+export const createProductError = createAction(
+  '[Create Product Effect] CREATE_PRODUCT_ERROR',
+  props<{ error: Error | string }>()
 );
 
-//
+// UPDATE PRODUCT
 export const updateProduct = createAction(
   '[Product Form Page] UPDATE_PRODUCT',
   props<{ product: IProduct }>()
 );
+export const updateProductSuccess = createAction(
+  '[Update Product Effect] UPDATE_PRODUCT_SUCCESS',
+  props<{ product: IProduct }>()
+);
+export const updateProductError = createAction(
+  '[Update Product Effect] UPDATE_PRODUCT_ERROR',
+  props<{ error: Error | string }>()
+);
+
 
 export const deleteProduct = createAction(
   '[Product List Page] DELETE_PRODUCT',
