@@ -71,4 +71,19 @@ export class ProductsEffects {
       )
     ));
 
+  createProduct$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductsActions.createProduct),
+      pluck('product'),
+      concatMap((product: ProductModel) => this.asyncProductService.createProduct(product)
+        .pipe(
+          map((createdProduct: IProduct) => {
+            this.router.navigate(['/']);
+            return ProductsActions.createProductSuccess({ product: createdProduct });
+          }),
+          catchError(error => of(ProductsActions.createProductError({ error })))
+        )
+      )
+    ));
+
 }

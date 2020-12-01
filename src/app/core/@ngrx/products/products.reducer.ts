@@ -21,7 +21,8 @@ const reducer = createReducer(
       ...state,
       data,
       loading: false,
-      loaded: true
+      loaded: true,
+      selectedProduct: null
     };
   }),
   on(
@@ -62,6 +63,15 @@ const reducer = createReducer(
     console.log('CREATE_PRODUCT action being handled!');
     return { ...state };
   }),
+  on(ProductsActions.createProductSuccess, (state, { product }) => {
+    console.log('CREATE_PRODUCT_SUCCESS action being handled!');
+    const data = [...state.data, { ...product }];
+
+    return {
+      ...state,
+      data
+    };
+  }),
 
   // UPDATE PRODUCT
   on(ProductsActions.updateProduct, state => {
@@ -81,7 +91,10 @@ const reducer = createReducer(
       data
     };
   }),
-  on(ProductsActions.updateProductError, (state, { error }) => {
+  on(
+    ProductsActions.updateProductError,
+    ProductsActions.createProductError,
+    (state, { error }) => {
     console.log('UPDATE_PRODUCT_ERROR action being handled!');
     return {
       ...state,
