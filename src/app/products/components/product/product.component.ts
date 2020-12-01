@@ -1,11 +1,15 @@
 import { Component, Input, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Subscription } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { ProductModel } from '../../../shared/models/product';
 import { CartService } from '../../../cart/services/cart.service';
-import { AsyncProductsService } from '../../services';
+import { IAppState } from './../../../core/@ngrx/app.state';
+import { ProductsState } from 'src/app/core/@ngrx/products/products.state';
+import * as ProductsActions from 'src/app/core/@ngrx/products/products.actions';
 
 @Component({
   selector: 'app-product',
@@ -16,30 +20,51 @@ import { AsyncProductsService } from '../../services';
 export class ProductComponent implements OnInit, OnDestroy {
   @Input() product: ProductModel;
 
-  private sub: Subscription;
+  private componentDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private asyncProductService: AsyncProductsService,
-    private cartService: CartService
+    private cartService: CartService,
+    private store: Store<IAppState>
   ) { }
 
   ngOnInit(): void {
     const id = +this.route.snapshot.paramMap.get('productID');
     if (id > 0) {
-      const observer = {
-        next: (product: ProductModel) => {
-          this.product = { ...product };
+      let observer: any = {
+        next: (productsState: ProductsState) => {
+          this.product = { ...productsState.selectedProduct } as ProductModel;
         },
-        error: (err: any) => console.log(err)
+        error(err) {
+          console.log(err);
+        },
+        complete() {
+          console.log('Stream is completed');
+        }
       };
-      this.sub = this.asyncProductService.getProduct(id).subscribe(observer);
+
+      this.store
+        .pipe(
+          select('products'),
+          takeUntil(this.componentDestroyed$)
+        )
+        .subscribe(observer);
+
+      observer = {
+        ...observer,
+        next: () => {
+          this.store.dispatch(ProductsActions.getProduct({ productID: +id }));
+        }
+      };
+
+      this.route.paramMap.subscribe(observer);
+
     }
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+    this.componentDestroyed$.complete();
   }
 
   onBuy(): void {
@@ -48,6 +73,6 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   onGoToProduct(): void {
-    this.router.navigate([`product/${this.product.id}`], {relativeTo: this.route});
+    this.router.navigate([`product/${this.product.id}`], { relativeTo: this.route });
   }
 }
