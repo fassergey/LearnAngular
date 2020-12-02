@@ -57,7 +57,7 @@ export const updateProductError = createAction(
   props<{ error: Error | string }>()
 );
 
-
+// DELETE PRODUCT
 export const deleteProduct = createAction(
   '[Product List Page] DELETE_PRODUCT',
   props<{ product: IProduct }>()

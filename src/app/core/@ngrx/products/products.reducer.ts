@@ -95,7 +95,7 @@ const reducer = createReducer(
     ProductsActions.updateProductError,
     ProductsActions.createProductError,
     (state, { error }) => {
-    console.log('UPDATE_PRODUCT_ERROR action being handled!');
+    console.log('UPDATE/CREATE_PRODUCT_ERROR action being handled!');
     return {
       ...state,
       error

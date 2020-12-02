@@ -67,14 +67,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       this.route.paramMap.subscribe(observer);
     }
 
-    const product = { ...this.product } as IProduct;
-    if (product.id) {
-      this.store.dispatch(ProductsActions.updateProduct({ product }));
-    } else {
-      this.store.dispatch(ProductsActions.createProduct({ product }));
-    }
-
-
     this.categories = Object.keys(Category);
   }
 
@@ -84,19 +76,12 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   }
 
   onSaveProduct(): void {
-    const product = { ...this.product };
-
-    const method = product.id ? 'updateProduct' : 'createProduct';
-    const observer = {
-      next: () => {
-        product.id
-          ? this.router.navigate(['product-list', { editedProductID: product.id }])
-          : this.onGoBack();
-      },
-      error: (err: any) => console.log(err)
-    };
-    this.sub = this.asyncProductsService[method](product).subscribe(observer);
-
+    const product = { ...this.product } as IProduct;
+    if (product.id) {
+      this.store.dispatch(ProductsActions.updateProduct({ product }));
+    } else {
+      this.store.dispatch(ProductsActions.createProduct({ product }));
+    }
   }
 
   onGoBack(): void {
