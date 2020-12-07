@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 import { ProductModel, IProduct } from '../../../shared/models/product';
 import { AsyncProductsService } from '../../services';
 import { IAppState } from './../../../core/@ngrx';
-import { ProductsState, selectProductsData, selectProductsError } from 'src/app/core/@ngrx';
+import { selectProductsData } from 'src/app/core/@ngrx';
 import * as ProductsActions from 'src/app/core/@ngrx/products/products.actions';
 
 @Component({

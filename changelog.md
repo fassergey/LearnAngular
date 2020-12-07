@@ -64,7 +64,9 @@
 ## Ngrx
 
     1. created ProductsState and AppState.
-    2. created actions
-    3. created reducer
-    4. 
-    5. created effects
+    2. created products actions
+    3. created products reducer
+    4. created products selectors
+    5. created products effects
+    6. implemented navigation by actions in ProductComponent
+    7. created composed selector getProductByUrl

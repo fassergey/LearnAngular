@@ -1,8 +1,10 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+
+import { Store } from '@ngrx/store';
 
 import { ProductModel } from '../../../shared/models/product';
 import { CartService } from '../../../cart/services/cart.service';
+import * as RouterActions from './../../../core/@ngrx/router/router.actions';
 
 @Component({
   selector: 'app-product',
@@ -14,8 +16,7 @@ export class ProductComponent {
   @Input() product: ProductModel;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
+    private store: Store,
     private cartService: CartService
   ) { }
 
@@ -25,10 +26,16 @@ export class ProductComponent {
   }
 
   onEdit(): void {
-    this.router.navigate([`admin/products/edit/${this.product.id}`]);
+    const link = ['/edit', this.product.id];
+    this.store.dispatch(RouterActions.go({
+      path: link
+    }));
   }
 
   onGoToProduct(): void {
-    this.router.navigate([`product-view/${this.product.id}`], { relativeTo: this.route });
+    const link = ['product-list/product-view', this.product.id];
+    this.store.dispatch(RouterActions.go({
+      path: link
+    }));
   }
 }

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ProductComponent, ProductListComponent, ProductViewComponent } from './components';
 import { ProductsComponent } from './products.component';
+import { ProductResolveGuard } from './guards/product-resolve.guard';
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
     children: [
       {
         path: 'product-view/:productID',
-        component: ProductViewComponent
+        component: ProductViewComponent,
+        resolve: { product: ProductResolveGuard }
       },
       {
         path: 'product/:productID',
