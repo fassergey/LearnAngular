@@ -23,15 +23,6 @@ export class ProductsEffects {
     this.actions$.pipe(
       ofType(ProductsActions.getProducts),
       switchMap(action =>
-        // Notice!
-        // If you have a connection to the Firebase,
-        // the stream will be infinite - you have to unsubscribe
-        // This can be performed following this pattern
-        // this.taskObservableService
-        //      .getTasks()
-        //      .pipe(takeUntil(this.actions$.pipe(ofType(TasksActions.TaskListComponentIsDestroyed))
-        // If you use HttpClient, the stream is finite,
-        // so you have no needs to unsubscribe
         this.asyncProductService
           .getProducts()
           .then(products => ProductsActions.getProductsSuccess({ products }))
@@ -39,21 +30,6 @@ export class ProductsEffects {
       )
     )
   );
-
-  getProduct$: Observable<Action> = createEffect(() =>
-    this.actions$.pipe(
-      ofType(ProductsActions.getProduct),
-      pluck('productID'),
-      switchMap(productID => this.asyncProductService.getProduct(productID)
-        .pipe(
-          map(product => {
-            console.log(product);
-            return ProductsActions.getProductSuccess({ product });
-          }),
-          catchError(error => of(ProductsActions.getProductError({ error })))
-        )
-      )
-    ));
 
   updateProduct$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
@@ -85,5 +61,18 @@ export class ProductsEffects {
         )
       )
     ));
+
+  deleteProduct$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductsActions.deleteProduct),
+      pluck('product'),
+      concatMap((product: ProductModel) => this.asyncProductService.deleteProduct(product)
+        .pipe(
+          map(() => ProductsActions.deleteProductSuccess({ product })),
+          catchError(error => of(ProductsActions.deleteProductError({ error })))
+        )
+      )
+    )
+  );
 
 }

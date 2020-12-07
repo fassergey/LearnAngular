@@ -64,4 +64,7 @@
 ## Ngrx
 
     1. created ProductsState and AppState.
-    2. 
+    2. created actions
+    3. created reducer
+    4. 
+    5. created effects

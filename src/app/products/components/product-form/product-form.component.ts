@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { select, Store } from '@ngrx/store';
 import { Subject, Subscription } from 'rxjs';
@@ -8,10 +8,8 @@ import { takeUntil } from 'rxjs/operators';
 
 import { Category } from './../../../shared/models/category.enum';
 import { ProductModel, IProduct } from 'src/app/shared/models/product';
-import { AsyncProductsService } from '../../services';
 import * as ProductsActions from 'src/app/core/@ngrx/products/products.actions';
-import { IAppState } from 'src/app/core/@ngrx';
-import { ProductsState } from 'src/app/core/@ngrx/products/products.state';
+import { selectSelectedProductByUrl } from 'src/app/core/@ngrx';
 
 @Component({
   selector: 'app-product-form',
@@ -26,21 +24,17 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   private componentDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(
-    private asyncProductsService: AsyncProductsService,
-    private router: Router,
     private route: ActivatedRoute,
     private location: Location,
-    private store: Store<IAppState>
+    private store: Store
   ) { }
 
   ngOnInit(): void {
     const id = +this.route.snapshot.paramMap.get('productID');
     if (id > 0) {
-      let observer: any = {
-        next: (productsState: ProductsState) => {
-            this.product = productsState.selectedProduct
-              ? {...productsState.selectedProduct} as ProductModel
-              : new ProductModel();
+      const observer: any = {
+        next: (product: ProductModel) => {
+            this.product = {...product};
         },
         error(err) {
           console.log(err);
@@ -52,19 +46,10 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
       this.store
         .pipe(
-          select('products'),
+          select(selectSelectedProductByUrl),
           takeUntil(this.componentDestroyed$)
         )
         .subscribe(observer);
-
-      observer = {
-        ...observer,
-        next: () => {
-          this.store.dispatch(ProductsActions.getProduct({ productID: +id }));
-        }
-      };
-
-      this.route.paramMap.subscribe(observer);
     }
 
     this.categories = Object.keys(Category);

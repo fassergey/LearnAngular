@@ -2,7 +2,8 @@
   <h2>Today in our shop:</h2>
 </div>
 <div class='container'>
-  <p *ngIf="(productsState$ | async).error as value">{{value}}</p>
-  <app-product *ngFor='let product of (productsState$ | async).data' [product]='product'
+  <p *ngIf="(productsError$ | async) as value">{{value}}</p>
+  <app-product *ngFor='let product of (products$ | async)'
+    [product]="product"
     [class.edited]="isEdited(product)"></app-product>
 </div>

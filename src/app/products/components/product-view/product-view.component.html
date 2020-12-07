@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="product-description" (click)="onGoToProduct()">
+  <div class="product-description">
     <img src='../../assets/no_photo.png' width="150px" height="100px" />
     <div>{{product.name}}</div>
     <div>{{product.description}}</div>
@@ -8,4 +8,5 @@
     <div>isAvailable <input type="checkbox" disabled [checked]="product.isAvailable" /></div>
   </div>
   <button type="button" class="btn btn-primary" (click)="onBuy()" [disabled]="!product.isAvailable">Buy</button>
+  <button type="button" class="btn btn-warning" (click)="onEdit()">Edit</button>
 </div>

@@ -5,10 +5,10 @@ import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
-import { ProductModel } from '../../../shared/models/product';
+import { ProductModel, IProduct } from '../../../shared/models/product';
 import { AsyncProductsService } from '../../services';
 import { IAppState } from './../../../core/@ngrx';
-import { ProductsState } from 'src/app/core/@ngrx/products/products.state';
+import { ProductsState, selectProductsData, selectProductsError } from 'src/app/core/@ngrx';
 import * as ProductsActions from 'src/app/core/@ngrx/products/products.actions';
 
 @Component({
@@ -17,7 +17,8 @@ import * as ProductsActions from 'src/app/core/@ngrx/products/products.actions';
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit {
-  productsState$: Observable<ProductsState>;
+  products$: Observable<ReadonlyArray<IProduct>>;
+  productsError$: Observable<Error | string>;
 
   private editedProduct: ProductModel;
 
@@ -28,7 +29,7 @@ export class ProductListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.productsState$ = this.store.pipe(select('products'), tap(x => console.log(x)));
+    this.products$ = this.store.select(selectProductsData);
     this.store.dispatch(ProductsActions.getProducts());
 
     const observer = {

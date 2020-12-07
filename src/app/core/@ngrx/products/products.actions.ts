@@ -14,21 +14,6 @@ export const getProductsError = createAction(
   props<{ error: Error | string }>()
 );
 
-// GET PRODUCT
-export const getProduct = createAction(
-  '[Product List Page] GET_PRODUCT',
-  props<{ productID: number }>()
-
-);
-export const getProductSuccess = createAction(
-  '[Get Product Effect] GET_PRODUCT_SUCCESS',
-  props<{ product: IProduct }>()
-);
-export const getProductError = createAction(
-  '[Get Product Effect] GET_PRODUCT_ERROR',
-  props<{ error: Error | string }>()
-);
-
 // CREATE PRODUCT
 export const createProduct = createAction(
   '[Product Form Page] CREATE_PRODUCT',
@@ -61,4 +46,14 @@ export const updateProductError = createAction(
 export const deleteProduct = createAction(
   '[Product List Page] DELETE_PRODUCT',
   props<{ product: IProduct }>()
+);
+
+export const deleteProductSuccess = createAction(
+  '[Delete Product Effect] DELETE_PRODUCT_SUCCESS',
+  props<{ product: IProduct }>()
+);
+
+export const deleteProductError = createAction(
+  '[Delete Product Effect] DELETE_PRODUCT_ERROR',
+  props<{ error: Error | string }>()
 );
