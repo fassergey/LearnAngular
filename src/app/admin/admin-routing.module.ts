@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../core/guards/auth.guard';
-import { ProductFormComponent, ProductResolveGuard } from '../products';
+import { ProductFormComponent, ProductResolveGuard, ProductsStatePreloadingGuard } from '../products';
 import { AdminComponent } from './admin.component';
 import { AdminDashboardComponent, ManageProductsComponent, ManageOrdersComponent } from './components';
 
@@ -15,6 +15,7 @@ const routes: Routes = [
       {
         path: 'products',
         component: ManageProductsComponent,
+        canActivate: [ProductsStatePreloadingGuard],
         children: [
           {
             path: 'add',

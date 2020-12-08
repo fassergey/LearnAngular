@@ -70,3 +70,5 @@
     5. created products effects
     6. implemented navigation by actions in ProductComponent
     7. created composed selector getProductByUrl
+    8. implemented state preloading guard
+    9. implemented exist guard
