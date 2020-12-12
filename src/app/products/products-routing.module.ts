@@ -11,6 +11,7 @@ const routes: Routes = [
     component: ProductsComponent,
     canActivate: [ProductsStatePreloadingGuard],
     children: [
+      // эти два объекта, думаю, больше подходят для админки, чем для обычного пользователя
       {
         path: 'product-view/:productID',
         component: ProductViewComponent,
