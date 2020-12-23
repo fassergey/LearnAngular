@@ -13,7 +13,7 @@
         <input type="text" class="form-control" id="clientFirstNameId" placeholder="First Name (required)" required
           formControlName="clientFirstName" (blur)="onBlur('clientFirstName')">
         <div class="help-block alert alert-danger mb-3" *ngIf="isClientFirstNameInvalid">
-          {{ validationMessage }}
+          {{ validationMessage.clientFirstName }}
         </div>
       </div>
 
@@ -28,7 +28,7 @@
         <input type="text" class="form-control" id="clientEmailId" placeholder="Email (required)" required
           formControlName="clientEmail" appClientEmailValidator (blur)="onBlur('clientEmail')">
         <div class="help-block alert alert-danger mb-3" *ngIf="isClientEmailInvalid">
-          {{ validationMessage }}
+          {{ validationMessage.clientEmail }}
         </div>
       </div>
 

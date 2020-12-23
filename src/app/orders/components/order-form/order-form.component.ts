@@ -21,7 +21,10 @@ export class OrderFormComponent implements OnInit, OnDestroy, CanComponentDeacti
   originalOrder: OrderModel;
   orderForm: FormGroup;
   selfPickup = false;
-  validationMessage: string;
+  validationMessage = {
+    clientFirstName: '',
+    clientEmail: ''
+  };
 
   private subCart: Subscription;
   private nextOrderIndex: number;
@@ -35,7 +38,6 @@ export class OrderFormComponent implements OnInit, OnDestroy, CanComponentDeacti
       clientEmail: 'Please enter a valid email address.'
     }
   };
-
 
   constructor(
     private orderArrayService: OrderArrayService,
@@ -164,10 +166,10 @@ export class OrderFormComponent implements OnInit, OnDestroy, CanComponentDeacti
   }
 
   private setValidationMessage(c: AbstractControl, controlName: string): void {
-    this.validationMessage = '';
+    this.validationMessage[controlName] = '';
 
     if ((c.touched || c.dirty) && c.errors) {
-      this.validationMessage = Object.keys(c.errors)
+      this.validationMessage[controlName] = Object.keys(c.errors)
         .map(key => this.validationMessagesMap[controlName][key])
         .join(' ');
     }
