@@ -14,7 +14,6 @@ import { AppSettingsService } from './core/services/app-settings.service';
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('appTitle') appTitle: ElementRef;
 
-  cartMenuItemTitle: string;
   cartItemQty: number;
 
   private unsubscribe: Subject<void> = new Subject();

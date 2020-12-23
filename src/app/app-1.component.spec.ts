@@ -1,5 +1,3 @@
-import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { of } from 'rxjs';
 
@@ -15,12 +13,22 @@ describe('AppComponent', () => {
   let component: AppComponent;
 
   beforeEach(() => {
-    cartServiceStub = {
-      products$: of(new Array<CartItem>())
-    };
-
     appSettingsServiceStub = {
       loadAppSettings: () => {}
+    };
+
+    const cartItems: CartItem[] = [
+      {
+        name: 'product',
+        description: 'description',
+        count: 3,
+        id: 1,
+        isAvailable: true,
+        price: 12
+      }
+    ];
+    cartServiceStub = {
+      products$: of(new Array<CartItem>(...cartItems))
     };
 
     TestBed.configureTestingModule({
@@ -37,26 +45,8 @@ describe('AppComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should create the app', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it(`should have as title 'Fasolko\'s Stall'`, () => {
-    let de: DebugElement = fixture.debugElement.query(By.css('.title h1'));
-    let el: HTMLElement = de.nativeElement;
-
+  it(`should have 'Cart - 1' in cartItemQuantity when Cart contains 1 product`, () => {
     fixture.detectChanges();
-    const content = el.textContent;
-    expect(content).toEqual('Fasolko\'s Stall');
-  });
-
-  it('should have 0 in cartItemQty', () => {
-    fixture.detectChanges();
-    expect(component.cartItemQty).toEqual(0);
-  });
-
-  it(`should have 'Cart' in cartItemQuantity`, () => {
-    fixture.detectChanges();
-    expect(component.cartItemQuantity).toEqual('Cart');
+    expect(component.cartItemQuantity).toEqual('Cart - 1');
   });
 });

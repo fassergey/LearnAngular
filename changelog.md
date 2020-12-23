@@ -79,3 +79,8 @@
     2. Implemented validation: validator for firstClientName property and validating directive for email property.
     3. Added possibility to add several phones and remove any of them except the first.
     4. From validation messages in the class of component
+
+## Unit Tests
+
+    1. Created integrating tests (app & app-1) for AppComponent
+    2. 
