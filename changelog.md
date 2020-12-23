@@ -72,3 +72,10 @@
     7. created composed selector getProductByUrl
     8. implemented state preloading guard
     9. implemented exist guard
+
+## Forms
+
+    1. Updated OrderFormComponent.
+    2. Implemented validation: validator for firstClientName property and validating directive for email property.
+    3. Added possibility to add several phones and remove any of them except the first.
+    4. From validation messages in the class of component

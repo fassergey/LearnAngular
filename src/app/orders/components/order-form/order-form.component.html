@@ -4,17 +4,61 @@
       Order Form
     </h4>
   </div>
+
   <div class="card-body">
-    <form (ngSubmit)="onSaveOrder()" id="order-form" #form="ngForm">
-      <div class="form-group">
-        <label for="clientFirstName">First Name</label>
-        <input type="text" class="form-control" id="clientFirstName" name="clientFirstName" placeholder="First Name"
-          required [(ngModel)]="order.clientFirstName">
+    <form [formGroup]="orderForm" (ngSubmit)="onSaveOrder()">
+
+      <div class="form-group" [ngClass]="{'is-invalid': validationMessage}">
+        <label for="clientFirstNameId">First Name</label>
+        <input type="text" class="form-control" id="clientFirstNameId" placeholder="First Name (required)" required
+          formControlName="clientFirstName" (blur)="onBlur('clientFirstName')">
+        <div class="help-block alert alert-danger mb-3" *ngIf="isClientFirstNameInvalid">
+          {{ validationMessage }}
+        </div>
       </div>
+
       <div class="form-group">
-        <label for="clientLastName">Last Name</label>
-        <input type="text" class="form-control" id="clientLastName" name="clientLastName" placeholder="Last Name"
-          [(ngModel)]="order.clientLastName">
+        <label for="clientLastNameId">Last Name</label>
+        <input type="text" class="form-control" id="clientLastNameId" placeholder="Last Name"
+          formControlName="clientLastName">
+      </div>
+
+      <div class="form-group" [ngClass]="{'is-invalid': validationMessage}">
+        <label for="clientEmailId">Email</label>
+        <input type="text" class="form-control" id="clientEmailId" placeholder="Email (required)" required
+          formControlName="clientEmail" appClientEmailValidator (blur)="onBlur('clientEmail')">
+        <div class="help-block alert alert-danger mb-3" *ngIf="isClientEmailInvalid">
+          {{ validationMessage }}
+        </div>
+      </div>
+
+      <div formArrayName="phones">
+        <div class="form-group row align-items-end" *ngFor="let phone of phones.controls; let i = index">
+          <div class="col">
+            <label for="{{'clientPhoneId' + i}}">Phone</label>
+            <input type="textarea" class="form-control" id="{{'clientPhoneId' + i}}" placeholder="Phone"
+              formControlName="{{i}}">
+          </div>
+          <div class="col-1 text-right" *ngIf="i>0">
+            <button class="btn btn-danger" (click)="onRemovePhone(i)">X</button>
+          </div>
+        </div>
+      </div>
+
+      <input type="checkbox" class="mr-1 mb-3" (change)="onToggleAddress()" />Self-pickup
+
+      <div class="form-group" *ngIf="!selfPickup">
+        <label for="clientAddressId">Address</label>
+        <input type="textarea" class="form-control" id="clientAddressId" placeholder="Address"
+          formControlName="clientAddress">
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-4 col-md-offset-2">
+          <button class="btn btn-primary" type="button" (click)="onAddPhone()">
+            Add Another Phone
+          </button>
+        </div>
       </div>
 
       <div>
@@ -46,8 +90,12 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Save</button>
+      <button type="submit" class="btn btn-primary" [disabled]="orderForm.invalid">Save</button>
       <button class="btn btn-primary" type="button" (click)="onGoBack()">Back</button>
     </form>
   </div>
 </div>
+
+<br>Dirty: {{ orderForm.dirty }}
+<br>Touched: {{ orderForm.touched }}
+<br>Valid: {{ orderForm.valid }}
