@@ -86,3 +86,4 @@
     2. Created isolated tests for AppSettingsService
     3. Created isolated tests for OrderByPipe
     4. 
+    5. Added code test coverage report
