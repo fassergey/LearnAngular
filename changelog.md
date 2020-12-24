@@ -84,3 +84,5 @@
 
     1. Created integrating tests (app & app-1) for AppComponent
     2. Created isolated tests for AppSettingsService
+    3. Created isolated tests for OrderByPipe
+    4. 
