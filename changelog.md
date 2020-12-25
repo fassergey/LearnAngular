@@ -85,5 +85,5 @@
     1. Created integrating tests (app & app-1) for AppComponent
     2. Created isolated tests for AppSettingsService
     3. Created isolated tests for OrderByPipe
-    4. 
+    4. Created shallow tests
     5. Added code test coverage report
